@@ -1,0 +1,485 @@
+/* ==========================================================================
+   SVCET NLP PREPROCESS - BEAUTIFUL & SIMPLE LIGHT THEME
+   - Top Header / Navbar: Soft Light Green (#d3ebd5 to #bee3c1)
+   - Remaining Body & Cards: Clean Crisp White (#ffffff) with Soft Mint Accents
+   - Minimalist, Elegant, High-Legibility Light Design System
+   ========================================================================== */
+
+:root {
+  /* Top Bar / Header Light Green Colors */
+  --bg-top-bar: linear-gradient(135deg, #d8edd9 0%, #c4e6c7 100%);
+  --bg-hero: linear-gradient(180deg, #c4e6c7 0%, #e6f4e7 65%, #ffffff 100%);
+  
+  /* Main Body & Card Backgrounds */
+  --bg-primary: #ffffff;          /* Pure white body background */
+  --bg-secondary: #f6faf6;        /* Very soft light mint-gray accent area */
+  --bg-card: #ffffff;             /* Crisp white cards */
+  --bg-card-hover: #fafefa;       /* Subtle off-white hover */
+
+  /* Borders & Divider Colors */
+  --border-subtle: #e1ece2;       /* Delicate light gray-green border */
+  --border-light-green: #a3d4a6;  /* Soft green border accent */
+  --border-accent: #4caf50;       /* Primary green accent border */
+
+  /* Primary Accent & Brand Greens */
+  --accent-emerald: #1b5e20;      /* Dark green for high-contrast text & icons */
+  --accent-green: #2e7d32;        /* Primary elegant green */
+  --accent-green-bright: #388e3c; /* Bright vibrant green */
+  --accent-mint: #c8e6c9;         /* Soft mint green badge/pill background */
+  --accent-mint-light: #e8f5e9;   /* Softest light green tint */
+
+  /* Typography Colors */
+  --text-dark: #0e3111;           /* High contrast heading text */
+  --text-primary: #212529;        /* Clean charcoal body text */
+  --text-secondary: #2e7d32;      /* Medium dark green text */
+  --text-muted: #5a6e5d;          /* Subtle muted green-gray */
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 2px 8px rgba(27, 94, 32, 0.06);
+  --shadow-md: 0 4px 16px rgba(27, 94, 32, 0.1);
+  --shadow-lg: 0 8px 24px rgba(27, 94, 32, 0.14);
+  --shadow-hover: 0 8px 24px rgba(46, 125, 50, 0.15);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================
+   Base Styles
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Base Typography Overrides for Clean Light Aesthetics */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+p {
+  color: #334155;
+}
+
+.text-white {
+  color: var(--text-dark) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* ==========================================
+   TOP BAR / NAVBAR (Light Green Theme)
+   ========================================== */
+.navbar-custom {
+  background: var(--bg-top-bar);
+  border-bottom: 2px solid var(--border-light-green);
+  padding: 0.85rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 12px rgba(27, 94, 32, 0.08);
+}
+
+.svcet-logo-badge {
+  background: linear-gradient(135deg, #2e7d32, #388e3c) !important;
+  border: 1px solid #1b5e20 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(27, 94, 32, 0.25);
+}
+
+.navbar-brand span {
+  color: var(--text-dark) !important;
+}
+
+.navbar-brand small {
+  color: #1b5e20 !important;
+}
+
+.nav-link {
+  color: #1b431e !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #0d2c10 !important;
+  background: #b5e2b9;
+}
+
+/* Mobile Nav Toggle */
+.navbar-toggler {
+  border-color: var(--accent-green) !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231b5e20' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* ==========================================
+   HERO SECTION (Top Light Green Transition)
+   ========================================== */
+.hero-section {
+  padding: 3.5rem 0 3rem 0;
+  position: relative;
+  background: var(--bg-hero);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hero-heading {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  color: var(--text-dark);
+}
+
+.hero-heading .text-white {
+  color: var(--text-dark) !important;
+}
+
+.hero-heading .text-indigo {
+  color: var(--accent-green) !important;
+}
+
+.hero-subheading {
+  font-size: 1.15rem;
+  color: #274e29;
+  margin-bottom: 2rem;
+  max-width: 650px;
+}
+
+.hero-graphic-box {
+  width: 100%;
+  max-width: 450px;
+  height: 300px;
+  background: #ffffff;
+  border: 2px solid var(--border-light-green);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.hero-graphic-box i {
+  font-size: 3.8rem;
+  color: var(--accent-green);
+  margin-bottom: 1rem;
+}
+
+.hero-graphic-box h5 {
+  color: var(--text-dark) !important;
+}
+
+.hero-graphic-box p {
+  color: var(--text-secondary) !important;
+}
+
+/* ==========================================
+   BUTTONS (Simple Light Green & Emerald)
+   ========================================== */
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #2e7d32, #388e3c);
+  color: #ffffff !important;
+  border: none;
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(46, 125, 50, 0.25);
+  transition: var(--transition);
+}
+
+.btn-primary-gradient:hover {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(46, 125, 50, 0.35);
+  color: #ffffff !important;
+}
+
+.btn-primary-gradient *, .svcet-logo-badge * {
+  color: #ffffff !important;
+}
+
+.btn-outline-custom {
+  background: #ffffff;
+  color: var(--accent-green);
+  border: 2px solid var(--accent-green);
+  font-weight: 600;
+  padding: 0.65rem 1.3rem;
+  border-radius: 10px;
+  transition: var(--transition);
+}
+
+.btn-outline-custom:hover {
+  background: var(--accent-mint-light);
+  border-color: var(--accent-emerald);
+  color: var(--accent-emerald);
+}
+
+/* ==========================================
+   REMAINING BODY CONTENT & CARDS (Clean White)
+   ========================================== */
+.glass-card {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.glass-card:hover {
+  border-color: var(--border-light-green);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card {
+  background: #ffffff !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* Section Headings */
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark) !important;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2.25rem;
+  font-size: 1.05rem;
+}
+
+/* Badges & Pills */
+.badge-technique {
+  background: var(--accent-mint-light);
+  color: #1b5e20;
+  border: 1px solid var(--border-light-green);
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-variant {
+  background: var(--accent-mint);
+  color: var(--text-dark);
+  border: 1px solid #a3d4a6;
+  padding: 0.35rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ==========================================
+   CODE OUTPUT BOXES (Clean Light Code Panels)
+   ========================================== */
+.code-output {
+  background: #f4f9f5;
+  border: 1.5px solid var(--border-light-green);
+  border-radius: 10px;
+  padding: 1.25rem;
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  color: #1b5e20;
+  overflow-x: auto;
+  min-height: 80px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ==========================================
+   COMPARISON & TOKEN CHIPS
+   ========================================== */
+.comparison-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.comparison-arrow {
+  color: var(--accent-green);
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.token-chip {
+  display: inline-block;
+  background: #edf7ee;
+  border: 1px solid #a3d4a6;
+  color: #1b5e20;
+  padding: 0.3rem 0.65rem;
+  margin: 0.2rem;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.token-chip.changed {
+  background: #fef9c3;
+  border-color: #fde047;
+  color: #854d0e;
+  font-weight: bold;
+}
+
+.token-chip.removed {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+  text-decoration: line-through;
+}
+
+/* ==========================================
+   FORM CONTROLS & CHECKBOXES
+   ========================================== */
+.form-control-dark, .form-select-dark {
+  background-color: #ffffff !important;
+  border: 1.5px solid #c3dec5 !important;
+  color: var(--text-primary) !important;
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.form-control-dark:focus, .form-select-dark:focus {
+  border-color: var(--accent-green) !important;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15) !important;
+  outline: none;
+}
+
+.form-control-dark::placeholder {
+  color: #78907b;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.custom-checkbox-card {
+  background: #ffffff;
+  border: 1.5px solid #c3dec5;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: var(--text-dark);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.custom-checkbox-card:hover {
+  background: var(--accent-mint-light);
+  border-color: var(--accent-green);
+}
+
+.custom-checkbox-card input[type="checkbox"] {
+  accent-color: var(--accent-green);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* ==========================================
+   STATISTICS DASHBOARD GRID
+   ========================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-box {
+  background: #ffffff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent-emerald);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   FOOTER (Clean Light Green Accent)
+   ========================================== */
+footer {
+  background: #f4f9f5;
+  border-top: 2px solid var(--border-light-green);
+  margin-top: auto;
+  padding: 3rem 0 1.5rem 0;
+}
+
+footer h5, footer h6 {
+  color: var(--text-dark) !important;
+}
+
+footer a {
+  color: var(--accent-green);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+footer a:hover {
+  color: var(--accent-emerald);
+}
+
+/* Responsive Layout Fixes */
+@media (max-width: 768px) {
+  .hero-heading {
+    font-size: 2.1rem;
+  }
+  .comparison-container {
+    grid-template-columns: 1fr;
+  }
+  .comparison-arrow {
+    transform: rotate(90deg);
+  }
+}

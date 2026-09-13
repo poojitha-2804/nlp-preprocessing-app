@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive NLP Data Preprocessing Techniques Educational Platform. Learn Tokenization, Stemming, Lemmatization, Stop Word Removal, and Text Normalization through live practice.">
+    <meta name="author" content="NLP Preprocess Team">
+    <title>{% block title %}NLP Preprocess | Master NLP Data Preprocessing{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/svcet_logo.jpg') }}" alt="SVCET Chittoor Logo" height="52" class="rounded-circle shadow-sm border border-2 border-warning bg-white">
+                <div class="d-flex flex-column lh-sm">
+                    <span class="fw-bold text-dark fs-6">Sri Venkateswara College of Engineering &amp; Technology (Autonomous)</span>
+                    <small class="text-success font-monospace fw-bold" style="font-size: 0.7rem; letter-spacing: 0.8px;">CHITTOOR &bull; NLP DATA PREPROCESSING TECHNIQUES</small>
+                </div>
+            </a>
+            <button class="navbar-toggler navbar-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('techniques') }}"><i class="fas fa-layer-group me-1"></i> Techniques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('workbench') }}"><i class="fas fa-flask me-1"></i> NLP Workbench</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}"><i class="fas fa-info-circle me-1"></i> About</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-primary-gradient btn-sm" href="{{ url_for('explore') }}">
+                            <i class="fas fa-compass me-1"></i> Start Exploring
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row gy-4 mb-4">
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="fw-bold text-white mb-3"><i class="fas fa-university me-2 text-warning"></i>SVCET NLP Preprocess</h5>
+                    <p class="text-secondary small">
+                        An interactive educational platform for Sri Venkateswara College of Engineering &amp; Technology (SVCET) students to master Natural Language Processing data preprocessing techniques.
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{{ url_for('index') }}">Home</a></li>
+                        <li class="mb-2"><a href="{{ url_for('techniques') }}">Techniques</a></li>
+                        <li class="mb-2"><a href="{{ url_for('workbench') }}">NLP Workbench</a></li>
+                        <li class="mb-2"><a href="{{ url_for('about') }}">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Techniques</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{{ url_for('tokenization') }}">Tokenization (11 Types)</a></li>
+                        <li class="mb-2"><a href="{{ url_for('stemming') }}">Stemming (5 Algorithms)</a></li>
+                        <li class="mb-2"><a href="{{ url_for('lemmatization') }}">Lemmatization (6 Methods)</a></li>
+                        <li class="mb-2"><a href="{{ url_for('stopwords') }}">Stop Word Removal</a></li>
+                        <li class="mb-2"><a href="{{ url_for('cleaning') }}">Text Cleaning & Normalization</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Interactive Tools</h6>
+                    <p class="text-secondary small mb-3">
+                        Test custom sentences, analyze token changes, and view live processing statistics.
+                    </p>
+                    <a href="{{ url_for('workbench') }}" class="btn btn-outline-custom btn-sm w-100">
+                        <i class="fas fa-play me-2"></i> Launch NLP Workbench
+                    </a>
+                </div>
+            </div>
+            <hr class="border-secondary opacity-25">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary py-2">
+                <div>&copy; 2026 SVCET NLP . Developed by V. Poojitha, CSE (AI &amp; ML)</div>
+                <div class="mt-2 mt-md-0">
+                    <span class="badge badge-technique"><i class="fas fa-university me-1"></i> Sri Venkateswara College of Engineering &amp; Technology (SVCET)</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Main JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

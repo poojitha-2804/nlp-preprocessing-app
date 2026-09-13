@@ -1,0 +1,231 @@
+{% extends 'layout.html' %}
+
+{% block title %}Tokenization Techniques (11 Types) | NLP Preprocess{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- Header -->
+        <div class="text-center max-width-700 mx-auto mb-5">
+            <span class="badge badge-technique mb-2"><i class="fas fa-cubes me-1"></i> Core NLP Technique</span>
+            <h1 class="hero-heading fs-2 text-white">Tokenization Deep Dive</h1>
+            <p class="section-subtitle">Tokenization is the process of breaking text into smaller discrete units (tokens) such as words, subwords, characters, or n-grams.</p>
+        </div>
+
+        <!-- Interactive Tokenization Sandbox -->
+        <div class="glass-card mb-5 p-4 border-indigo">
+            <h4 class="fw-bold text-white mb-3"><i class="fas fa-flask me-2 text-indigo"></i>Interactive Tokenization Sandbox</h4>
+            <div class="row g-3 mb-3">
+                <div class="col-lg-8">
+                    <label class="form-label text-secondary small fw-bold">Enter Text to Tokenize:</label>
+                    <textarea id="tok-input" class="form-control form-control-dark" rows="3">Natural Language Processing is amazing! Transformers use subword tokenization.</textarea>
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label text-secondary small fw-bold">Select Tokenization Type (11 Available):</label>
+                    <select id="tok-type" class="form-select form-select-dark mb-3">
+                        <option value="word" selected>1. Word Tokenization</option>
+                        <option value="sentence">2. Sentence Tokenization</option>
+                        <option value="character">3. Character Tokenization</option>
+                        <option value="subword">4. Subword Tokenization</option>
+                        <option value="whitespace">5. Whitespace Tokenization</option>
+                        <option value="punctuation">6. Punctuation Tokenization</option>
+                        <option value="regex">7. Regular Expression Tokenization</option>
+                        <option value="unigram_ngram">8. Unigram Tokenization (N=1)</option>
+                        <option value="bigram">9. Bigram Tokenization (N=2)</option>
+                        <option value="trigram">10. Trigram Tokenization (N=3)</option>
+                        <option value="bpe">11. Byte Pair Encoding (BPE)</option>
+                        <option value="wordpiece">12. WordPiece Tokenization</option>
+                        <option value="unigram">13. Unigram Model Tokenization</option>
+                    </select>
+                    <button id="tok-run-btn" class="btn btn-primary-gradient w-100">
+                        <i class="fas fa-play me-2"></i> Tokenize Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Demo Output Card -->
+            <div class="row mt-4">
+                <div class="col-md-7">
+                    <div class="text-secondary small fw-bold mb-1">Tokens Generated (Backend Execution):</div>
+                    <div id="tok-output" class="code-output">Click "Tokenize Now" to test...</div>
+                </div>
+                <div class="col-md-5">
+                    <div class="text-secondary small fw-bold mb-1">Explanation:</div>
+                    <div id="tok-explanation" class="p-3 glass-card small text-secondary h-100">
+                        Select a tokenization method and run to view dynamic explanation.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11 Tokenization Types Cards -->
+        <h3 class="fw-bold text-white mb-4"><i class="fas fa-list-ol me-2 text-indigo"></i>All 11 Tokenization Types Explained</h3>
+        
+        <div class="row g-4">
+            <!-- 1. Sentence Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 1</span>
+                    <h5 class="fw-bold text-white">Sentence Tokenization</h5>
+                    <p class="text-secondary small mb-2">Splits raw body text into full sentence strings based on sentence boundary delimiters like `.`, `!`, and `?`.</p>
+                    <div class="code-output small mb-2">
+                        Input: "NLP is great. We love AI!"<br>
+                        Output: ["NLP is great.", "We love AI!"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Word Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 2</span>
+                    <h5 class="fw-bold text-white">Word Tokenization</h5>
+                    <p class="text-secondary small mb-2">Separates text into individual words, numbers, and isolated punctuation marks.</p>
+                    <div class="code-output small mb-2">
+                        Input: "Natural Language Processing is amazing."<br>
+                        Output: ["Natural", "Language", "Processing", "is", "amazing", "."]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Character Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 3</span>
+                    <h5 class="fw-bold text-white">Character Tokenization</h5>
+                    <p class="text-secondary small mb-2">Decomposes text into every single individual character, including letters, digits, whitespace, and symbols.</p>
+                    <div class="code-output small mb-2">
+                        Input: "AI"<br>
+                        Output: ["A", "I"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Subword Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 4</span>
+                    <h5 class="fw-bold text-white">Subword Tokenization</h5>
+                    <p class="text-secondary small mb-2">Decomposes complex or rare words into smaller prefix, stem, or suffix subword units (e.g. `##ing`). Essential for modern Transformer models (BERT/GPT).</p>
+                    <div class="code-output small mb-2">
+                        Input: "unhappiness"<br>
+                        Output: ["un", "##happy", "##ness"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Whitespace Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 5</span>
+                    <h5 class="fw-bold text-white">Whitespace Tokenization</h5>
+                    <p class="text-secondary small mb-2">Splits strictly on space, tab, or newline characters. Punctuation remains attached to adjacent words.</p>
+                    <div class="code-output small mb-2">
+                        Input: "Hello, world!"<br>
+                        Output: ["Hello,", "world!"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Punctuation Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 6</span>
+                    <h5 class="fw-bold text-white">Punctuation Tokenization</h5>
+                    <p class="text-secondary small mb-2">Explicitly isolates punctuation boundaries from surrounding word tokens.</p>
+                    <div class="code-output small mb-2">
+                        Input: "state-of-the-art"<br>
+                        Output: ["state", "-", "of", "-", "the", "-", "art"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Regex Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 7</span>
+                    <h5 class="fw-bold text-white">Regular Expression Tokenization</h5>
+                    <p class="text-secondary small mb-2">Uses regular expression patterns (e.g., `\w+`) to match and filter specific token patterns like alphanumeric words.</p>
+                    <div class="code-output small mb-2">
+                        Pattern: `\b\w+\b`<br>
+                        Output: ["Natural", "Language", "Processing"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. N-gram Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 8</span>
+                    <h5 class="fw-bold text-white">N-gram Tokenization</h5>
+                    <p class="text-secondary small mb-2">Groups contiguous sequences of N words together (Bigrams: N=2, Trigrams: N=3) to preserve local word order context.</p>
+                    <div class="code-output small mb-2">
+                        Input: "machine learning model"<br>
+                        Bigrams: ["machine learning", "learning model"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Byte Pair Encoding (BPE) -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 9</span>
+                    <h5 class="fw-bold text-white">Byte Pair Encoding (BPE)</h5>
+                    <p class="text-secondary small mb-2">Iteratively replaces the most frequent pairs of characters in a corpus with new merged subwords (used in GPT tokenizers).</p>
+                    <div class="code-output small mb-2">
+                        Tokens: ["low&lt;/w&gt;", "low", "er&lt;/w&gt;", "est&lt;/w&gt;"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. WordPiece Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 10</span>
+                    <h5 class="fw-bold text-white">WordPiece Tokenization</h5>
+                    <p class="text-secondary small mb-2">Subword algorithm used by BERT that maximizes likelihood score when selecting subword vocabulary tokens (using `##` prefix).</p>
+                    <div class="code-output small mb-2">
+                        Input: "tokenization"<br>
+                        Output: ["token", "##ization"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Unigram Tokenization -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Type 11</span>
+                    <h5 class="fw-bold text-white">Unigram Tokenization</h5>
+                    <p class="text-secondary small mb-2">Starts with a huge subword vocabulary and iteratively prunes subwords with lowest loss impact (used in SentencePiece).</p>
+                    <div class="code-output small mb-2">
+                        Input: "unigram"<br>
+                        Output: ["uni", "gram"]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('tok-run-btn');
+    const input = document.getElementById('tok-input');
+    const typeSelect = document.getElementById('tok-type');
+
+    btn.addEventListener('click', () => {
+        runTechniqueDemo(
+            '/api/tokenize',
+            { text: input.value, type: typeSelect.value },
+            'tok-output',
+            'tok-explanation'
+        );
+    });
+
+    // Run default demo on load
+    btn.click();
+});
+</script>
+{% endblock %}

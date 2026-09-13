@@ -1,0 +1,255 @@
+{% extends 'layout.html' %}
+
+{% block title %}NLP Preprocess | Understand NLP Data Preprocessing Through Practice{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-7">
+                <div class="badge-technique mb-3">
+                    <span class="badge bg-success me-2">SVCET CHITTOOR</span><strong>SRI VENKATESWARA COLLEGE OF ENGINEERING &amp; TECHNOLOGY (AUTONOMOUS)</strong>
+                </div>
+                <h1 class="hero-heading">
+                    <span class="text-white">SVCET</span><br>
+                    <span class="text-indigo" style="font-size: 0.85em; letter-spacing: 0.5px;">NLP DATA PREPROCESSING TECHNIQUES</span>
+                </h1>
+                <p class="hero-subheading">
+                    Understand, learn, experiment, and visualize how raw text is transformed into machine-readable data across all major preprocessing techniques.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('explore') }}" class="btn btn-primary-gradient">
+                        <i class="fas fa-compass me-2"></i> Start Exploring
+                    </a>
+                    <a href="{{ url_for('workbench') }}" class="btn btn-outline-custom">
+                        <i class="fas fa-flask me-2"></i> Try NLP Workbench
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center">
+                <div class="hero-graphic">
+                    <div class="hero-graphic-box p-3">
+                        <img src="{{ url_for('static', filename='images/svcet_logo.jpg') }}" alt="SVCET Chittoor Official Logo" height="110" class="rounded-circle shadow mb-2 border border-3 border-warning bg-white">
+                        <h5 class="fw-bold text-dark mb-1">SVCET CHITTOOR</h5>
+                        <p class="text-secondary small mb-0 px-4">Raw Text &rarr; Tokenization &rarr; Cleaning &rarr; Model Input</p>
+                        <div class="mt-3">
+                            <span class="badge badge-technique me-1">Tokens</span>
+                            <span class="badge badge-variant me-1">Stems</span>
+                            <span class="badge badge-technique me-1">Lemmas</span>
+                            <span class="badge badge-variant">Cleaned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center max-width-600 mx-auto mb-5">
+            <span class="badge badge-variant mb-2">Core Pipeline</span>
+            <h2 class="section-title text-white">NLP Preprocessing Techniques</h2>
+            <p class="section-subtitle">Master the foundational building blocks of natural language processing workflows.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Tokenization -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="mb-3 text-primary fs-3">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-2">Tokenization</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Splits text streams into words, subwords, characters, or n-grams. Includes 11 major algorithms like WordPiece, BPE, and Regex Tokenization.
+                    </p>
+                    <div>
+                        <a href="{{ url_for('tokenization') }}" class="btn btn-outline-custom btn-sm w-100">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Stemming -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="mb-3 text-info fs-3">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-2">Stemming</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Strips word suffixes to reduce words to crude base roots using algorithms like Porter, Snowball, Lancaster, Rule-Based, and Lovins.
+                    </p>
+                    <div>
+                        <a href="{{ url_for('stemming') }}" class="btn btn-outline-custom btn-sm w-100">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Lemmatization -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="mb-3 text-purple fs-3">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-2">Lemmatization</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Uses vocabulary and morphological analysis (WordNet, POS-tagging, Context-Aware) to return canonical dictionary headwords (lemmas).
+                    </p>
+                    <div>
+                        <a href="{{ url_for('lemmatization') }}" class="btn btn-outline-custom btn-sm w-100">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Stop Word Removal -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="mb-3 text-warning fs-3">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-2">Stop Word Removal</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Filters out high-frequency non-informative words. Supports custom words, frequency-based trimming, domain-specific, and multi-language sets.
+                    </p>
+                    <div>
+                        <a href="{{ url_for('stopwords') }}" class="btn btn-outline-custom btn-sm w-100">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Normalization -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="mb-3 text-success fs-3">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-2">Normalization</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Standardizes casing, expands contractions ("don't" &rarr; "do not"), handles emojis, and canonicalizes text formatting across corpora.
+                    </p>
+                    <div>
+                        <a href="{{ url_for('cleaning') }}" class="btn btn-outline-custom btn-sm w-100">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Text Cleaning -->
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card h-100 d-flex flex-column">
+                    <div class="mb-3 text-danger fs-3">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h4 class="fw-bold text-white mb-2">Text Cleaning</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Removes HTML tags, URLs, numbers, special characters, and extraneous whitespace to eliminate noise before feature extraction.
+                    </p>
+                    <div>
+                        <a href="{{ url_for('cleaning') }}" class="btn btn-outline-custom btn-sm w-100">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="py-5 bg-glass border-top border-bottom border-glass">
+    <div class="container">
+        <div class="text-center max-width-600 mx-auto mb-5">
+            <span class="badge badge-technique mb-2">Simple Workflow</span>
+            <h2 class="section-title text-white">How It Works</h2>
+            <p class="section-subtitle">Experiment with NLP preprocessing in three effortless steps.</p>
+        </div>
+
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="glass-card h-100 p-4">
+                    <div class="display-5 text-indigo fw-bold mb-3">1</div>
+                    <h5 class="fw-bold text-white mb-2">Enter Text</h5>
+                    <p class="text-secondary small mb-0">Type or paste any sentence, paragraph, or custom dataset snippet into the workbench.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card h-100 p-4">
+                    <div class="display-5 text-purple fw-bold mb-3">2</div>
+                    <h5 class="fw-bold text-white mb-2">Select Technique</h5>
+                    <p class="text-secondary small mb-0">Choose from tokenization, stemming, lemmatization, stop words, or custom text cleaning pipelines.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card h-100 p-4">
+                    <div class="display-5 text-cyan fw-bold mb-3">3</div>
+                    <h5 class="fw-bold text-white mb-2">View Output & Stats</h5>
+                    <p class="text-secondary small mb-0">Inspect real-time token arrays, before/after diff highlights, and detailed execution statistics.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY NLP PREPROCESSING SECTION -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+                <span class="badge badge-technique mb-2"><i class="fas fa-lightbulb text-warning me-1"></i> Core Concept</span>
+                <h2 class="section-title text-dark fw-bold">Why NLP Preprocessing?</h2>
+                <p class="text-secondary mb-3">
+                    Raw human text is unstructured, noisy, and highly varied. Machine learning models and neural networks require clean, consistent numerical or tokenized representations to learn effectively.
+                </p>
+                <ul class="list-unstyled text-secondary small">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="fas fa-check-circle text-success me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong class="text-dark fw-bold">Reduces Vocabulary Size:</strong> Stemming, lemmatization, and stop word removal combine redundant word variations, shrinking the feature space.
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="fas fa-check-circle text-success me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong class="text-dark fw-bold">Eliminates Noise:</strong> Removing HTML tags, URLs, and punctuation ensures models focus strictly on semantic content.
+                        </div>
+                    </li>
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="fas fa-check-circle text-success me-3 mt-1 fs-5"></i>
+                        <div>
+                            <strong class="text-dark fw-bold">Improves Model Accuracy:</strong> Consistent preprocessing leads to better embeddings, classification accuracy, and downstream performance.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-4">
+                    <h5 class="fw-bold text-white mb-3"><i class="fas fa-code me-2 text-indigo"></i>Interactive Transformation Preview</h5>
+                    <div class="mb-3">
+                        <div class="text-secondary small mb-1">Original Raw Input:</div>
+                        <div class="code-output text-warning">"The 3 children are running &amp; playing happily at https://example.com 😊"</div>
+                    </div>
+                    <div class="text-center my-2 text-primary fs-4">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div>
+                        <div class="text-secondary small mb-1">Processed Pipeline Output:</div>
+                        <div class="code-output text-success">["child", "run", "play", "happili"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

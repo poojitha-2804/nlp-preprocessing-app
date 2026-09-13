@@ -1,0 +1,580 @@
+{% extends 'layout.html' %}
+
+{% block title %}Interactive Exploration Journey | SVCET NLP Preprocess{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- HEADER -->
+        <div class="text-center max-width-800 mx-auto mb-5">
+            <span class="badge badge-technique mb-2 fs-6 px-3 py-2">
+                <i class="fas fa-compass me-1"></i> Guided NLP Exploration Journey
+            </span>
+            <h1 class="hero-heading fs-1 text-dark fw-bold mb-3">
+                Interactive Preprocessing Simulator &amp; Battle Lab
+            </h1>
+            <p class="section-subtitle fs-5 text-secondary">
+                An innovative, interactive playground where you can step through the 6 milestones of text preprocessing live, compare algorithms side-by-side, and test your knowledge.
+            </p>
+        </div>
+
+        <!-- SECTION 1: LIVE INTERACTIVE PIPELINE STEP SIMULATOR -->
+        <div class="glass-card mb-5 p-4 border border-2 border-success bg-white shadow-sm rounded-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                <div>
+                    <h3 class="fw-bold text-dark mb-1">
+                        <i class="fas fa-play-circle text-success me-2"></i>1. Live Interactive Pipeline Stepper
+                    </h3>
+                    <p class="text-secondary small mb-0">Watch how a single text input transforms step-by-step through 6 preprocessing stages.</p>
+                </div>
+                <div class="mt-2 mt-sm-0">
+                    <button id="auto-play-btn" class="btn btn-outline-custom btn-sm fw-bold">
+                        <i class="fas fa-play me-1 text-success"></i> Auto-Play Flow
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Controls & Presets -->
+            <div class="row g-3 mb-4">
+                <div class="col-lg-8">
+                    <label class="form-label text-dark fw-bold small mb-1">Input Text for Pipeline Stepper:</label>
+                    <input type="text" id="stepper-input-text" class="form-control font-monospace border-success" 
+                           value="The 3 happy children were running fast to https://svcet.in! 😊">
+                </div>
+                <div class="col-lg-4">
+                    <label class="form-label text-dark fw-bold small mb-1">Preset Samples:</label>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-sm btn-outline-custom stepper-preset" data-text="The 3 happy children were running fast to https://svcet.in! 😊">
+                            Sample 1 (URL &amp; Emojis)
+                        </button>
+                        <button class="btn btn-sm btn-outline-custom stepper-preset" data-text="NLP models don't like raw, noisy &amp; unstructured text datasets!">
+                            Sample 2 (Contractions)
+                        </button>
+                        <button class="btn btn-sm btn-outline-custom stepper-preset" data-text="Sri Venkateswara College of Engineering &amp; Technology (SVCET), Chittoor!">
+                            Sample 3 (College)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP BUTTONS NAV -->
+            <div class="row g-2 mb-4">
+                <div class="col-12">
+                    <div class="d-flex flex-wrap gap-2 justify-content-between" id="stepper-nav-buttons">
+                        <button class="btn btn-success flex-fill active-step-btn fw-bold py-2" data-step="1">
+                            <span class="badge bg-white text-success me-1">Step 1</span> Raw Intake
+                        </button>
+                        <button class="btn btn-outline-custom flex-fill step-btn fw-bold py-2" data-step="2">
+                            <span class="badge bg-secondary me-1">Step 2</span> Clean &amp; Lower
+                        </button>
+                        <button class="btn btn-outline-custom flex-fill step-btn fw-bold py-2" data-step="3">
+                            <span class="badge bg-secondary me-1">Step 3</span> Stop Words
+                        </button>
+                        <button class="btn btn-outline-custom flex-fill step-btn fw-bold py-2" data-step="4">
+                            <span class="badge bg-secondary me-1">Step 4</span> Stem / Lemma
+                        </button>
+                        <button class="btn btn-outline-custom flex-fill step-btn fw-bold py-2" data-step="5">
+                            <span class="badge bg-secondary me-1">Step 5</span> Tokenization
+                        </button>
+                        <button class="btn btn-outline-custom flex-fill step-btn fw-bold py-2" data-step="6">
+                            <span class="badge bg-secondary me-1">Step 6</span> Vector ID
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP DISPLAY CANVAS -->
+            <div class="p-4 rounded-3 border border-success bg-light">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 id="step-title" class="fw-bold text-dark mb-0">Step 1: Raw Unstructured Text Intake</h5>
+                    <span id="step-badge" class="badge bg-success px-3 py-2 fs-6">Milestone 01 / 06</span>
+                </div>
+                
+                <p id="step-description" class="text-secondary small mb-3">
+                    Raw text as received from source files, web scraping, user comments, or document scanners. It contains punctuation, uppercase characters, URLs, numbers, and emojis.
+                </p>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white border rounded h-100">
+                            <div class="text-muted small fw-bold mb-1"><i class="fas fa-arrow-right text-success me-1"></i> Current Text State:</div>
+                            <div id="step-output-box" class="code-output text-dark font-monospace p-2 border rounded bg-light" style="min-height: 55px; word-break: break-all;">
+                                "The 3 happy children were running fast to https://svcet.in! 😊"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white border rounded h-100">
+                            <div class="text-muted small fw-bold mb-1"><i class="fas fa-chart-bar text-success me-1"></i> Transformation Metrics:</div>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <span class="badge bg-success p-2">Char Count: <strong id="step-char-count">64</strong></span>
+                                <span class="badge bg-primary p-2">Token Count: <strong id="step-token-count">10</strong></span>
+                                <span class="badge bg-warning text-dark p-2">Noise Removed: <strong id="step-noise-removed">0%</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-3">
+                    <button id="prev-step-btn" class="btn btn-outline-custom btn-sm" disabled>
+                        <i class="fas fa-chevron-left me-1"></i> Previous Step
+                    </button>
+                    <button id="next-step-btn" class="btn btn-success btn-sm font-monospace fw-bold">
+                        Next Step <i class="fas fa-chevron-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: SIDE-BY-SIDE ALGORITHM BATTLE ARENA -->
+        <div class="glass-card mb-5 p-4 border border-2 border-success bg-white shadow-sm rounded-4">
+            <h3 class="fw-bold text-dark mb-2">
+                <i class="fas fa-balance-scale text-success me-2"></i>2. Interactive Algorithm Battle Arena
+            </h3>
+            <p class="text-secondary small mb-3">Compare how two different preprocessing strategies handle your custom text live.</p>
+
+            <!-- Custom Input for Battle -->
+            <div class="mb-4">
+                <label class="form-label text-dark fw-bold small mb-1">Custom Text for Battle Comparison:</label>
+                <input type="text" id="battle-custom-input" class="form-control border-success font-monospace" 
+                       value="The 3 children are running & playing happily at https://svcet.in! 😊">
+            </div>
+
+            <!-- Battle Selector Tabs -->
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <button class="btn btn-success battle-toggle-btn active" data-mode="stem_vs_lemma">
+                    <i class="fas fa-cut me-1"></i> Stemming vs Lemmatization
+                </button>
+                <button class="btn btn-outline-custom battle-toggle-btn" data-mode="word_vs_subword">
+                    <i class="fas fa-cubes me-1"></i> Word vs Subword Tokenization
+                </button>
+                <button class="btn btn-outline-custom battle-toggle-btn" data-mode="unigram_vs_bigram">
+                    <i class="fas fa-link me-1"></i> Unigrams vs N-Grams
+                </button>
+                <button class="btn btn-outline-custom battle-toggle-btn" data-mode="stopwords_standard_vs_aggressive">
+                    <i class="fas fa-filter me-1"></i> Stopwords Standard vs Aggressive
+                </button>
+            </div>
+
+            <!-- Side-by-side Output Display -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="p-3 bg-light border border-2 border-success rounded-3 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 id="arena-title-1" class="fw-bold text-success mb-0 fs-5">Porter Stemmer (Rule Suffix Strip)</h6>
+                            <span class="badge bg-success">Algorithm A</span>
+                        </div>
+                        <p id="arena-desc-1" class="text-secondary small mb-3">Strips suffixes without dictionary lookup (`children` remains `children`, `running` &rarr; `run`).</p>
+                        <div class="text-muted small fw-bold mb-1">Processed Output:</div>
+                        <div id="arena-out-1" class="code-output font-monospace text-dark p-3 border rounded bg-white" style="min-height: 80px;">
+                            "the 3 children are run & play happili at https : // svcet . in !"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="p-3 bg-light border border-2 border-success rounded-3 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 id="arena-title-2" class="fw-bold text-success mb-0 fs-5">WordNet Lemmatization (Morphological)</h6>
+                            <span class="badge bg-primary">Algorithm B</span>
+                        </div>
+                        <p id="arena-desc-2" class="text-secondary small mb-3">Uses morphological dictionary to return valid base lemmas (`children` &rarr; `child`, `are` &rarr; `be`).</p>
+                        <div class="text-muted small fw-bold mb-1">Processed Output:</div>
+                        <div id="arena-out-2" class="code-output font-monospace text-dark p-3 border rounded bg-white" style="min-height: 80px;">
+                            "the 3 child be run & play happily at https : // svcet . in !"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SVCET STUDENT INTERACTIVE KNOWLEDGE QUIZ -->
+        <div class="glass-card mb-5 p-4 border border-2 border-success bg-white shadow-sm rounded-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold text-dark mb-1">
+                        <i class="fas fa-graduation-cap text-success me-2"></i>3. SVCET Student Interactive Knowledge Quiz
+                    </h3>
+                    <p class="text-secondary small mb-0">Test your understanding of NLP preprocessing concepts!</p>
+                </div>
+                <div class="mt-2 mt-sm-0">
+                    <span class="badge bg-success fs-6 p-2">Quiz Score: <strong id="quiz-score">0 / 4</strong></span>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Q1 -->
+                <div class="col-md-6">
+                    <div class="p-3 border rounded bg-light quiz-card h-100">
+                        <span class="badge bg-success mb-2">Question 1</span>
+                        <h6 class="fw-bold text-dark mb-3">Which technique guarantees that output words are valid dictionary headwords?</h6>
+                        <div class="d-flex flex-column gap-2 mb-3">
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="1" data-correct="false">A. Porter Stemming</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="1" data-correct="true">B. WordNet Lemmatization</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="1" data-correct="false">C. Lancaster Stemming</button>
+                        </div>
+                        <div id="quiz-feedback-1" class="small fw-bold text-success" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="col-md-6">
+                    <div class="p-3 border rounded bg-light quiz-card h-100">
+                        <span class="badge bg-success mb-2">Question 2</span>
+                        <h6 class="fw-bold text-dark mb-3">Why do we trim stop words like 'the', 'is', and 'at' during preprocessing?</h6>
+                        <div class="d-flex flex-column gap-2 mb-3">
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="2" data-correct="false">A. To make text harder to read</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="2" data-correct="true">B. To remove high-frequency non-informative words &amp; focus on key semantics</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="2" data-correct="false">C. To convert text into numbers directly</button>
+                        </div>
+                        <div id="quiz-feedback-2" class="small fw-bold text-success" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="col-md-6">
+                    <div class="p-3 border rounded bg-light quiz-card h-100">
+                        <span class="badge bg-success mb-2">Question 3</span>
+                        <h6 class="fw-bold text-dark mb-3">What is the main benefit of Subword Tokenization (e.g. WordPiece / BPE)?</h6>
+                        <div class="d-flex flex-column gap-2 mb-3">
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="3" data-correct="true">A. Solves Out-Of-Vocabulary (OOV) issues by decomposing unknown words into subword units</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="3" data-correct="false">B. Strips all numbers from text</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="3" data-correct="false">C. Removes all vowels from English words</button>
+                        </div>
+                        <div id="quiz-feedback-3" class="small fw-bold text-success" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="col-md-6">
+                    <div class="p-3 border rounded bg-light quiz-card h-100">
+                        <span class="badge bg-success mb-2">Question 4</span>
+                        <h6 class="fw-bold text-dark mb-3">What do Bigram N-grams capture that Unigrams miss?</h6>
+                        <div class="d-flex flex-column gap-2 mb-3">
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="4" data-correct="false">A. Character-level ASCII codes</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="4" data-correct="true">B. Contiguous two-word phrase contexts like 'not good' vs 'good'</button>
+                            <button class="btn btn-sm btn-outline-custom quiz-opt text-start" data-q="4" data-correct="false">C. Audio wave signals</button>
+                        </div>
+                        <div id="quiz-feedback-4" class="small fw-bold text-success" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: CALL TO ACTION -->
+        <div class="glass-card p-5 text-center bg-white border border-2 border-success rounded-4 shadow-sm">
+            <h2 class="fw-bold text-dark mb-3">Ready to Practice with Your Own Text?</h2>
+            <p class="text-secondary mb-4 max-width-600 mx-auto fs-5">
+                Launch the full interactive NLP Workbench to experiment with multi-step pipeline combinations, 11 tokenizers, 5 stemmers, and export cleaned dataset files in JSON or CSV format.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{{ url_for('workbench') }}" class="btn btn-primary-gradient py-3 px-5 fs-5">
+                    <i class="fas fa-flask me-2"></i> Launch NLP Workbench
+                </a>
+                <a href="{{ url_for('techniques') }}" class="btn btn-outline-custom py-3 px-4 fs-5">
+                    <i class="fas fa-list-ul me-2"></i> View All Techniques
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // -----------------------------------------------------------
+    // 1. PIPELINE STEPPER LOGIC
+    // -----------------------------------------------------------
+    let currentStep = 1;
+    let autoPlayTimer = null;
+
+    const stepsData = {
+        1: {
+            title: "Step 1: Raw Unstructured Text Intake",
+            badge: "Milestone 01 / 06",
+            desc: "Raw text collected from web scrapes, social media, PDFs, or user queries containing uppercase letters, punctuation, emojis, URLs, and numbers.",
+            process: (text) => text,
+            charCount: (text) => text.length,
+            tokenCount: (text) => text.split(/\s+/).filter(Boolean).length,
+            noiseRemoved: "0%"
+        },
+        2: {
+            title: "Step 2: Lowercasing & Text Cleaning",
+            badge: "Milestone 02 / 06",
+            desc: "Normalizes all characters to lowercase and strips noise such as web URLs, HTML tags, and non-alphanumeric emojis.",
+            process: (text) => {
+                let cleaned = text.toLowerCase();
+                cleaned = cleaned.replace(/https?:\/\/\S+|www\.\S+/g, '');
+                cleaned = cleaned.replace(/[^\w\s]/g, ' ');
+                return cleaned.replace(/\s+/g, ' ').trim();
+            },
+            charCount: (text) => stepsData[2].process(text).length,
+            tokenCount: (text) => stepsData[2].process(text).split(/\s+/).filter(Boolean).length,
+            noiseRemoved: "25%"
+        },
+        3: {
+            title: "Step 3: Stop Word Removal",
+            badge: "Milestone 03 / 06",
+            desc: "Filters out high-frequency structural stop words ('the', 'is', 'a', 'to', 'were') so downstream models focus only on semantic keywords.",
+            process: (text) => {
+                const stopWords = new Set(['the', 'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has', 'he', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'to', 'was', 'were', 'will', 'with', 'you', 'your']);
+                const cleaned = stepsData[2].process(text);
+                const words = cleaned.split(/\s+/).filter(Boolean);
+                return words.filter(w => !stopWords.has(w)).join(' ');
+            },
+            charCount: (text) => stepsData[3].process(text).length,
+            tokenCount: (text) => stepsData[3].process(text).split(/\s+/).filter(Boolean).length,
+            noiseRemoved: "45%"
+        },
+        4: {
+            title: "Step 4: Stemming & Lemmatization",
+            badge: "Milestone 04 / 06",
+            desc: "Collapses inflected word variations back to canonical root headwords ('children' -> 'child', 'running' -> 'run', 'happy' -> 'happi').",
+            process: (text) => {
+                const map = {
+                    'children': 'child',
+                    'running': 'run',
+                    'happy': 'happi',
+                    'happily': 'happi',
+                    'datasets': 'dataset',
+                    'models': 'model',
+                    'unstructured': 'unstruct'
+                };
+                const step3Text = stepsData[3].process(text);
+                const words = step3Text.split(/\s+/).filter(Boolean);
+                return words.map(w => map[w] || w).join(' ');
+            },
+            charCount: (text) => stepsData[4].process(text).length,
+            tokenCount: (text) => stepsData[4].process(text).split(/\s+/).filter(Boolean).length,
+            noiseRemoved: "60%"
+        },
+        5: {
+            title: "Step 5: Token Segmentation (Array Format)",
+            badge: "Milestone 05 / 06",
+            desc: "Splits cleaned text into discrete array token elements ready for matrix operations.",
+            process: (text) => {
+                const step4Text = stepsData[4].process(text);
+                const tokens = step4Text.split(/\s+/).filter(Boolean);
+                return JSON.stringify(tokens);
+            },
+            charCount: (text) => stepsData[4].process(text).length,
+            tokenCount: (text) => stepsData[4].process(text).split(/\s+/).filter(Boolean).length,
+            noiseRemoved: "75%"
+        },
+        6: {
+            title: "Step 6: Numerical Vector ID Representation",
+            badge: "Milestone 06 / 06",
+            desc: "Maps individual text tokens into integer vocabulary indices or embedding dense vectors suitable for neural models.",
+            process: (text) => {
+                const step4Text = stepsData[4].process(text);
+                const tokens = step4Text.split(/\s+/).filter(Boolean);
+                const vector = tokens.map((t, idx) => 101 + (t.charCodeAt(0) % 50) + idx * 7);
+                return JSON.stringify(vector);
+            },
+            charCount: (text) => stepsData[4].process(text).length,
+            tokenCount: (text) => stepsData[4].process(text).split(/\s+/).filter(Boolean).length,
+            noiseRemoved: "100%"
+        }
+    };
+
+    function updateStepperUI() {
+        const rawInput = document.getElementById('stepper-input-text').value || "Sample input text";
+        const step = stepsData[currentStep];
+
+        document.getElementById('step-title').innerText = step.title;
+        document.getElementById('step-badge').innerText = step.badge;
+        document.getElementById('step-description').innerText = step.desc;
+
+        const processed = step.process(rawInput);
+        document.getElementById('step-output-box').innerText = processed;
+
+        document.getElementById('step-char-count').innerText = step.charCount(rawInput);
+        document.getElementById('step-token-count').innerText = step.tokenCount(rawInput);
+        document.getElementById('step-noise-removed').innerText = step.noiseRemoved;
+
+        // Button nav states
+        document.querySelectorAll('#stepper-nav-buttons button').forEach(btn => {
+            const btnStep = parseInt(btn.getAttribute('data-step'));
+            if (btnStep === currentStep) {
+                btn.className = "btn btn-success flex-fill active-step-btn fw-bold py-2";
+                btn.querySelector('.badge').className = "badge bg-white text-success me-1";
+            } else {
+                btn.className = "btn btn-outline-custom flex-fill step-btn fw-bold py-2";
+                btn.querySelector('.badge').className = "badge bg-secondary me-1";
+            }
+        });
+
+        // Prev/Next buttons state
+        document.getElementById('prev-step-btn').disabled = (currentStep === 1);
+        const nextBtn = document.getElementById('next-step-btn');
+        if (currentStep === 6) {
+            nextBtn.innerHTML = 'Finish Flow <i class="fas fa-check ms-1"></i>';
+        } else {
+            nextBtn.innerHTML = 'Next Step <i class="fas fa-chevron-right ms-1"></i>';
+        }
+    }
+
+    // Stepper event handlers
+    document.querySelectorAll('#stepper-nav-buttons button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentStep = parseInt(btn.getAttribute('data-step'));
+            updateStepperUI();
+        });
+    });
+
+    document.getElementById('prev-step-btn').addEventListener('click', () => {
+        if (currentStep > 1) {
+            currentStep--;
+            updateStepperUI();
+        }
+    });
+
+    document.getElementById('next-step-btn').addEventListener('click', () => {
+        if (currentStep < 6) {
+            currentStep++;
+        } else {
+            currentStep = 1;
+        }
+        updateStepperUI();
+    });
+
+    document.getElementById('stepper-input-text').addEventListener('input', updateStepperUI);
+
+    document.querySelectorAll('.stepper-preset').forEach(preset => {
+        preset.addEventListener('click', () => {
+            document.getElementById('stepper-input-text').value = preset.getAttribute('data-text');
+            currentStep = 1;
+            updateStepperUI();
+        });
+    });
+
+    // Auto Play button
+    document.getElementById('auto-play-btn').addEventListener('click', () => {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+            document.getElementById('auto-play-btn').innerHTML = '<i class="fas fa-play me-1 text-success"></i> Auto-Play Flow';
+        } else {
+            document.getElementById('auto-play-btn').innerHTML = '<i class="fas fa-pause me-1 text-warning"></i> Pause Flow';
+            autoPlayTimer = setInterval(() => {
+                currentStep = (currentStep % 6) + 1;
+                updateStepperUI();
+            }, 1800);
+        }
+    });
+
+    // Initialize Stepper
+    updateStepperUI();
+
+    // -----------------------------------------------------------
+    // 2. ALGORITHM BATTLE ARENA LOGIC
+    // -----------------------------------------------------------
+    let currentBattleMode = 'stem_vs_lemma';
+
+    function updateBattleArena() {
+        const input = document.getElementById('battle-custom-input').value || "";
+        const title1 = document.getElementById('arena-title-1');
+        const title2 = document.getElementById('arena-title-2');
+        const desc1 = document.getElementById('arena-desc-1');
+        const desc2 = document.getElementById('arena-desc-2');
+        const out1 = document.getElementById('arena-out-1');
+        const out2 = document.getElementById('arena-out-2');
+
+        if (currentBattleMode === 'stem_vs_lemma') {
+            title1.innerText = "Porter Stemmer (Rule Suffix Strip)";
+            desc1.innerText = "Strips suffixes heuristically without vocabulary dictionary lookup ('children' -> 'children', 'running' -> 'run').";
+            out1.innerText = input.toLowerCase().replace(/running/g, 'run').replace(/playing/g, 'play').replace(/happily/g, 'happili');
+
+            title2.innerText = "WordNet Lemmatization (Morphological)";
+            desc2.innerText = "Morphological dictionary lookup guarantees canonical headwords ('children' -> 'child', 'are' -> 'be').";
+            out2.innerText = input.toLowerCase().replace(/children/g, 'child').replace(/are/g, 'be').replace(/running/g, 'run').replace(/playing/g, 'play');
+        } else if (currentBattleMode === 'word_vs_subword') {
+            title1.innerText = "Standard Word Tokenization";
+            desc1.innerText = "Splits strictly on word boundaries. Unknown out-of-vocabulary words remain whole.";
+            const tokens = input.split(/\s+/).filter(Boolean);
+            out1.innerText = JSON.stringify(tokens);
+
+            title2.innerText = "Subword Tokenization (BERT WordPiece)";
+            desc2.innerText = "Decomposes complex words into morphemes and subword prefix tokens (##) to solve OOV issues.";
+            const subwords = [];
+            input.split(/\s+/).filter(Boolean).forEach(word => {
+                if (word.length > 6) {
+                    subwords.push(word.substring(0, 4), "##" + word.substring(4));
+                } else {
+                    subwords.push(word);
+                }
+            });
+            out2.innerText = JSON.stringify(subwords);
+        } else if (currentBattleMode === 'unigram_vs_bigram') {
+            title1.innerText = "Unigram Tokenization (N=1)";
+            desc1.innerText = "Single word tokens. Simple but loses multi-word phrase context.";
+            const tokens = input.split(/\s+/).filter(Boolean);
+            out1.innerText = JSON.stringify(tokens);
+
+            title2.innerText = "Bigram Tokenization (N=2)";
+            desc2.innerText = "Groups pairs of adjacent words together to preserve contextual phrase structure.";
+            const tokens2 = input.split(/\s+/).filter(Boolean);
+            const bigrams = [];
+            for (let i = 0; i < tokens2.length - 1; i++) {
+                bigrams.push(tokens2[i] + " " + tokens2[i+1]);
+            }
+            out2.innerText = JSON.stringify(bigrams);
+        } else if (currentBattleMode === 'stopwords_standard_vs_aggressive') {
+            title1.innerText = "Standard Stop Words Trimming";
+            desc1.innerText = "Removes common grammatical articles and pronouns ('the', 'a', 'is', 'at').";
+            const stops = new Set(['the', 'a', 'an', 'is', 'at', 'in', 'to', 'and', 'are']);
+            const words = input.toLowerCase().split(/\s+/).filter(w => !stops.has(w));
+            out1.innerText = words.join(' ');
+
+            title2.innerText = "Aggressive Stop Words Trimming";
+            desc2.innerText = "Removes high-frequency words, numbers, short words (< 3 chars), and domain stopwords.";
+            const words2 = input.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(w => w.length > 2 && !['the','are','and','for','with','this'].includes(w));
+            out2.innerText = words2.join(' ');
+        }
+    }
+
+    document.querySelectorAll('.battle-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.battle-toggle-btn').forEach(b => b.className = "btn btn-outline-custom battle-toggle-btn");
+            btn.className = "btn btn-success battle-toggle-btn active";
+            currentBattleMode = btn.getAttribute('data-mode');
+            updateBattleArena();
+        });
+    });
+
+    document.getElementById('battle-custom-input').addEventListener('input', updateBattleArena);
+    updateBattleArena();
+
+    // -----------------------------------------------------------
+    // 3. QUIZ LOGIC
+    // -----------------------------------------------------------
+    let score = 0;
+    const answered = new Set();
+
+    document.querySelectorAll('.quiz-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const qNum = btn.getAttribute('data-q');
+            if (answered.has(qNum)) return;
+            answered.add(qNum);
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            const feedbackEl = document.getElementById('quiz-feedback-' + qNum);
+
+            if (isCorrect) {
+                btn.className = "btn btn-sm btn-success text-start w-100 fw-bold";
+                feedbackEl.innerHTML = '<i class="fas fa-check-circle me-1"></i> Correct! Outstanding job!';
+                feedbackEl.className = "small fw-bold text-success mt-2 d-block";
+                score++;
+            } else {
+                btn.className = "btn btn-sm btn-danger text-start w-100 fw-bold";
+                feedbackEl.innerHTML = '<i class="fas fa-times-circle me-1"></i> Incorrect. Try reviewing the concepts above!';
+                feedbackEl.className = "small fw-bold text-danger mt-2 d-block";
+            }
+
+            document.getElementById('quiz-score').innerText = `${score} / 4`;
+        });
+    });
+});
+</script>
+{% endblock %}

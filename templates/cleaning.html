@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+
+{% block title %}Text Cleaning & Normalization | NLP Preprocess{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- Header -->
+        <div class="text-center max-width-700 mx-auto mb-5">
+            <span class="badge badge-technique mb-2"><i class="fas fa-broom me-1"></i> Data Sanitation</span>
+            <h1 class="hero-heading fs-2 text-white">Text Cleaning &amp; Normalization</h1>
+            <p class="section-subtitle">Text cleaning prepares raw unstructured web, social, or document text by eliminating non-textual noise, symbols, and formatting inconsistencies.</p>
+        </div>
+
+        <!-- Interactive Cleaning Sandbox -->
+        <div class="glass-card mb-5 p-4 border-indigo">
+            <h4 class="fw-bold text-white mb-3"><i class="fas fa-flask me-2 text-indigo"></i>Interactive Text Cleaning Pipeline Sandbox</h4>
+            <div class="row g-3 mb-3">
+                <div class="col-lg-7">
+                    <label class="form-label text-secondary small fw-bold">Enter Raw Noisy Text:</label>
+                    <textarea id="clean-input" class="form-control form-control-dark" rows="5">Hello World!!! Visit https://example.com 😊 <p>We're learning 100% NLP preprocessing!</p></textarea>
+                </div>
+                <div class="col-lg-5">
+                    <label class="form-label text-secondary small fw-bold mb-2">Select Active Operations (10 Available):</label>
+                    <div class="checkbox-grid mb-3" style="grid-template-columns: 1fr 1fr;">
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="lowercasing" checked> Lowercasing
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="punctuation_removal" checked> Punctuation
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="number_removal" checked> Numbers
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="special_character_removal"> Special Chars
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="extra_whitespace_removal" checked> Extra Space
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="html_tag_removal" checked> HTML Tags
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="url_removal" checked> URLs
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="emoji_handling" checked> Emojis
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="contraction_expansion" checked> Contractions
+                        </label>
+                        <label class="custom-checkbox-card">
+                            <input type="checkbox" name="clean_page_op" value="uppercasing"> Uppercasing
+                        </label>
+                    </div>
+                    <button id="clean-run-btn" class="btn btn-primary-gradient w-100">
+                        <i class="fas fa-play me-2"></i> Clean Text Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Demo Output Card -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="text-secondary small fw-bold mb-1">Cleaned &amp; Normalized Result:</div>
+                    <div id="clean-output" class="code-output text-success">Click "Clean Text Now" to test...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 Operations Breakdown -->
+        <h3 class="fw-bold text-white mb-4"><i class="fas fa-tasks me-2 text-indigo"></i>10 Cleaning &amp; Normalization Operations</h3>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-font text-indigo me-2"></i>1. Lowercasing</h6>
+                    <p class="text-secondary small mb-1">Converts all text characters to lowercase so `Word` and `word` map to identical tokens.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-font text-purple me-2"></i>2. Uppercase Conversion</h6>
+                    <p class="text-secondary small mb-1">Converts characters to uppercase for specific keyword extraction or matching tasks.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-exclamation text-warning me-2"></i>3. Punctuation Removal</h6>
+                    <p class="text-secondary small mb-1">Strips punctuation marks (`!`, `?`, `.`, `,`, `;`) from tokens.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-hashtag text-cyan me-2"></i>4. Number Removal</h6>
+                    <p class="text-secondary small mb-1">Removes digits (`0-9`) when numerical values are irrelevant to semantic intent.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-dollar-sign text-danger me-2"></i>5. Special Character Removal</h6>
+                    <p class="text-secondary small mb-1">Strips symbols (`@`, `#`, `$`, `%`, `^`, `&amp;`, `*`) keeping strictly alphanumeric text.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-align-left text-success me-2"></i>6. Extra Whitespace Removal</h6>
+                    <p class="text-secondary small mb-1">Collapses multiple spaces, tabs, and newlines into a clean single space format.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-code text-primary me-2"></i>7. HTML Tag Removal</h6>
+                    <p class="text-secondary small mb-1">Parses and strips HTML markup (e.g. `&lt;div&gt;`, `&lt;p&gt;`) from web scrapes.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-link text-info me-2"></i>8. URL Removal</h6>
+                    <p class="text-secondary small mb-1">Strips web hyperlinks (`http://`, `https://`, `www.`) from text streams.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="far fa-smile text-warning me-2"></i>9. Emoji Handling</h6>
+                    <p class="text-secondary small mb-1">Strips or normalizes emoji symbols (`😊`, `🚀`) from social media comments.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-3">
+                    <h6 class="fw-bold text-white"><i class="fas fa-expand-alt text-indigo me-2"></i>10. Contraction Expansion</h6>
+                    <p class="text-secondary small mb-1">Expands informal English contractions (`can't` &rarr; `cannot`, `won't` &rarr; `will not`).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('clean-run-btn');
+    const input = document.getElementById('clean-input');
+
+    btn.addEventListener('click', () => {
+        const checkboxes = document.querySelectorAll('input[name="clean_page_op"]:checked');
+        const selectedOps = Array.from(checkboxes).map(cb => cb.value);
+
+        runTechniqueDemo(
+            '/api/clean',
+            { text: input.value, operations: selectedOps },
+            'clean-output'
+        );
+    });
+
+    btn.click();
+});
+</script>
+{% endblock %}

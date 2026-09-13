@@ -1,0 +1,212 @@
+{% extends 'layout.html' %}
+
+{% block title %}Interactive NLP Workbench & Processing Laboratory | SVCET{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- Header -->
+        <div class="text-center max-width-700 mx-auto mb-4">
+            <span class="badge badge-technique mb-2"><i class="fas fa-microscope me-1"></i> Processing Laboratory</span>
+            <h1 class="hero-heading fs-2 text-white">Interactive NLP Workbench</h1>
+            <p class="section-subtitle">Select any preprocessing technique, customize parameters, enter custom text, and observe real-time transformations and metrics.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- INPUT & CONTROL PANEL (LEFT) -->
+            <div class="col-lg-6">
+                <div class="glass-card h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold text-white mb-0"><i class="fas fa-edit me-2 text-indigo"></i>Input &amp; Configuration</h4>
+                        <button id="clear-btn" class="btn btn-outline-custom btn-sm">
+                            <i class="fas fa-eraser me-1"></i> Clear Input
+                        </button>
+                    </div>
+
+                    <!-- Preset Sample Text Buttons -->
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-bold">Load Sample Preset:</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-custom btn-sm preset-btn" data-sample="Natural Language Processing is a fascinating field of Artificial Intelligence.">
+                                Sample 1 (NLP Basics)
+                            </button>
+                            <button class="btn btn-outline-custom btn-sm preset-btn" data-sample="The 3 children are running, playing, and having fun at https://nlp.org! 😊 We don't stop learning.">
+                                Sample 2 (Complex Text)
+                            </button>
+                            <button class="btn btn-outline-custom btn-sm preset-btn" data-sample="playing played plays player connected connection connecting">
+                                Sample 3 (Stem / Lemma)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Text Area Input -->
+                    <div class="mb-4">
+                        <label for="playground-input" class="form-label text-secondary small fw-bold">Enter sentence or paragraph:</label>
+                        <textarea id="playground-input" class="form-control form-control-dark" rows="5" placeholder="Enter your sentence or paragraph here...">Natural Language Processing is a fascinating field of Artificial Intelligence.</textarea>
+                    </div>
+
+                    <!-- Primary Technique Selection -->
+                    <div class="mb-3">
+                        <label for="technique-select" class="form-label text-secondary small fw-bold">Select Primary Technique:</label>
+                        <select id="technique-select" class="form-select form-select-dark">
+                            <option value="tokenization" selected>Tokenization</option>
+                            <option value="stemming">Stemming</option>
+                            <option value="lemmatization">Lemmatization</option>
+                            <option value="stopwords">Stop Word Removal</option>
+                            <option value="cleaning">Text Cleaning &amp; Normalization</option>
+                            <option value="pipeline">⚡ Multi-Step Sequential Pipeline (Full Chain)</option>
+                        </select>
+                    </div>
+
+                    <!-- Dynamic Sub-Type Selection -->
+                    <div id="sub-type-container" class="mb-3">
+                        <label id="sub-type-label" for="sub-type-select" class="form-label text-secondary small fw-bold">Select Variant:</label>
+                        <select id="sub-type-select" class="form-select form-select-dark">
+                            <!-- Populated dynamically by playground.js -->
+                        </select>
+                    </div>
+
+                    <!-- Extra Dynamic Options (Custom stopwords, Regex pattern, Checkboxes) -->
+                    <div id="custom-options-container">
+                        <!-- Injected dynamically -->
+                    </div>
+
+                    <!-- Process Action Button -->
+                    <div class="mt-4">
+                        <button id="process-btn" class="btn btn-primary-gradient w-100 py-3 fs-5">
+                            <i class="fas fa-play me-2"></i> Process Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULTS & OUTPUT PANEL (RIGHT) -->
+            <div class="col-lg-6">
+                <div id="result-section" class="glass-card h-100 p-4" style="display: block;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold text-white mb-0"><i class="fas fa-poll me-2 text-cyan"></i>Transformation Output</h4>
+                        <div class="d-flex gap-2">
+                            <button id="copy-btn" class="btn btn-outline-custom btn-sm">
+                                <i class="fas fa-copy me-1"></i> Copy Output
+                            </button>
+                            <button id="download-json-btn" class="btn btn-outline-custom btn-sm">
+                                <i class="fas fa-file-download me-1 text-success"></i> JSON
+                            </button>
+                            <button id="download-csv-btn" class="btn btn-outline-custom btn-sm">
+                                <i class="fas fa-file-csv me-1 text-success"></i> CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Technique Badge -->
+                    <div class="mb-3">
+                        <span id="tech-name-display" class="badge badge-technique">Tokenization (Word)</span>
+                    </div>
+
+                    <!-- Original Text Display -->
+                    <div class="mb-3">
+                        <div class="text-secondary small fw-bold mb-1">Original Text:</div>
+                        <div id="original-text-display" class="p-2 glass-card small text-secondary">
+                            Input will render here...
+                        </div>
+                    </div>
+
+                    <!-- Processed Output Display -->
+                    <div class="mb-4">
+                        <div class="text-secondary small fw-bold mb-1">Processed Token Output:</div>
+                        <div id="processed-output-display" class="code-output">
+                            Processed output JSON / Array will appear here after clicking "Process Text".
+                        </div>
+                    </div>
+
+                    <!-- Multi-Step Pipeline Visualizer (When Pipeline selected) -->
+                    <div id="pipeline-stages-container" class="mb-4" style="display: none;">
+                        <div class="text-secondary small fw-bold mb-2"><i class="fas fa-project-diagram me-1 text-success"></i> Multi-Step Pipeline Chain Stages:</div>
+                        <div id="pipeline-stages-content"></div>
+                    </div>
+
+                    <!-- Visual Before & After Diff Card -->
+                    <div class="mb-4">
+                        <div class="text-secondary small fw-bold mb-1">Visual Comparison &amp; Token Highlights:</div>
+                        <div id="diff-container" class="p-3 glass-card text-wrap">
+                            <span class="text-muted small">Token diff view...</span>
+                        </div>
+                    </div>
+
+                    <!-- Token Frequency Visualizer -->
+                    <div class="mb-4">
+                        <div class="text-secondary small fw-bold mb-1"><i class="fas fa-chart-pie me-1 text-success"></i> Token Frequency Distribution:</div>
+                        <div id="freq-container" class="p-3 glass-card text-wrap">
+                            <span class="text-muted small">Token frequency counts...</span>
+                        </div>
+                    </div>
+
+                    <!-- Copyable Python Code Generator Snippet Card -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <div class="text-secondary small fw-bold"><i class="fab fa-python me-1 text-success"></i> Python Code Snippet (For Jupyter / Colab):</div>
+                            <button id="copy-python-btn" class="btn btn-outline-custom btn-sm py-0 px-2" style="font-size: 0.75rem;">
+                                <i class="fas fa-code me-1"></i> Copy Python Code
+                            </button>
+                        </div>
+                        <div id="python-code-display" class="code-output text-success" style="font-size: 0.85rem; max-height: 160px;">
+                            # Python code snippet will generate here...
+                        </div>
+                    </div>
+
+                    <!-- Explanation Panel -->
+                    <div class="mb-4">
+                        <div class="text-secondary small fw-bold mb-1"><i class="fas fa-info-circle me-1 text-indigo"></i> What happened?</div>
+                        <div id="explanation-display" class="p-3 glass-card small text-secondary border-indigo">
+                            Select a technique and click "Process Text" to view an automated breakdown of the linguistic transformation.
+                        </div>
+                    </div>
+
+                    <!-- Statistics Dashboard -->
+                    <div>
+                        <div class="text-secondary small fw-bold mb-2"><i class="fas fa-chart-bar me-1 text-purple"></i> Processing Statistics:</div>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <div id="stat-word-orig" class="stat-value">0</div>
+                                <div class="stat-label">Original Words</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-tokens-proc" class="stat-value">0</div>
+                                <div class="stat-label">Processed Tokens</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-char-orig" class="stat-value">0</div>
+                                <div class="stat-label">Original Chars</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-char-proc" class="stat-value">0</div>
+                                <div class="stat-label">Processed Chars</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-stopwords" class="stat-value">0</div>
+                                <div class="stat-label">Stopwords Removed</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-changes" class="stat-value">0</div>
+                                <div class="stat-label">Words Changed</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-sentences" class="stat-value">0</div>
+                                <div class="stat-label">Sentences</div>
+                            </div>
+                            <div class="stat-box">
+                                <div id="stat-time" class="stat-value">0 ms</div>
+                                <div class="stat-label">Execution Time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/playground.js') }}"></script>
+{% endblock %}
