@@ -19,7 +19,7 @@ try:
     from nltk import pos_tag
 
     # Download essential NLTK data quietly if needed
-    for pkg in ['punkt', 'punkt_tab', 'wordnet', 'stopwords', 'averaged_perceptron_tagger', 'omw-1.4']:
+    for pkg in ['punkt', 'punkt_tab', 'wordnet', 'stopwords', 'averaged_perceptron_tagger', 'averaged_perceptron_tagger_eng', 'omw-1.4']:
         try:
             nltk.download(pkg, quiet=True)
         except Exception:
