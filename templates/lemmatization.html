@@ -1,46 +1,55 @@
 {% extends 'layout.html' %}
 
-{% block title %}Lemmatization Methods | NLP Preprocess{% endblock %}
+{% block title %}Lemmatization & POS Tagging Methods | NLP Preprocess{% endblock %}
 
 {% block content %}
 <section class="py-5">
     <div class="container">
         <!-- Header -->
         <div class="text-center max-width-700 mx-auto mb-5">
-            <span class="badge badge-technique mb-2"><i class="fas fa-book me-1"></i> Morphological Analysis</span>
-            <h1 class="hero-heading fs-2 text-white">Lemmatization Methods</h1>
-            <p class="section-subtitle">Unlike stemming, lemmatization uses vocabulary and morphological context to convert words into valid canonical dictionary headwords (lemmas).</p>
+            <span class="badge badge-technique mb-2"><i class="fas fa-book me-1"></i> Morphological &amp; POS Analysis</span>
+            <h1 class="hero-heading fs-2 text-white">Lemmatization &amp; POS Tagging</h1>
+            <p class="section-subtitle">
+                Unlike stemming, lemmatization uses vocabulary and Part-Of-Speech (POS) syntactic context to convert words into canonical dictionary headwords (lemmas).
+            </p>
         </div>
 
-        <!-- Interactive Lemmatization Sandbox -->
+        <!-- Interactive Lemmatization & POS Sandbox -->
         <div class="glass-card mb-5 p-4 border-indigo">
-            <h4 class="fw-bold text-white mb-3"><i class="fas fa-flask me-2 text-indigo"></i>Interactive Lemmatization Sandbox</h4>
+            <h4 class="fw-bold text-white mb-3"><i class="fas fa-flask me-2 text-indigo"></i>Interactive Lemmatization &amp; POS Lab</h4>
             <div class="row g-3 mb-3">
                 <div class="col-lg-8">
-                    <label class="form-label text-secondary small fw-bold">Enter Text to Lemmatize:</label>
-                    <textarea id="lemma-input" class="form-control form-control-dark" rows="3">The children are running and playing better than before.</textarea>
+                    <label class="form-label text-secondary small fw-bold">Enter Text to Lemmatize &amp; POS Tag:</label>
+                    <textarea id="lemma-input" class="form-control form-control-dark" rows="3">this is a book. The children were running fast!</textarea>
                 </div>
                 <div class="col-lg-4">
-                    <label class="form-label text-secondary small fw-bold">Select Lemmatization Method:</label>
+                    <label class="form-label text-secondary small fw-bold">Select Lemmatization &amp; POS Method:</label>
                     <select id="lemma-method" class="form-select form-select-dark mb-3">
-                        <option value="wordnet" selected>1. WordNet Lemmatization</option>
-                        <option value="pos_based">2. POS-Based Lemmatization</option>
-                        <option value="dictionary">3. Dictionary-Based Lemmatization</option>
-                        <option value="rule_based">4. Rule-Based Lemmatization</option>
-                        <option value="context_aware">5. Context-Aware Lemmatization</option>
-                        <option value="transformer">6. Transformer/Contextual Lemmatization</option>
+                        <option value="pos_based" selected>1. POS-Based Lemmatization (NLTK POS Tagging)</option>
+                        <option value="wordnet">2. WordNet Standard Lemmatization</option>
+                        <option value="context_aware">3. Context-Aware &amp; Transformer POS Lemmatization</option>
+                        <option value="dictionary">4. Dictionary-Based Lemmatization</option>
+                        <option value="rule_based">5. Rule-Based Lemmatization</option>
                     </select>
-                    <button id="lemma-run-btn" class="btn btn-primary-gradient w-100">
-                        <i class="fas fa-play me-2"></i> Lemmatize Text
+                    <button id="lemma-run-btn" class="btn btn-primary-gradient w-100 py-2 fw-bold">
+                        <i class="fas fa-play me-2"></i> Run Lemmatization &amp; POS Tagging
                     </button>
                 </div>
             </div>
 
+            <!-- DYNAMIC POS TAGGING VISUALIZER (Rendered when POS analysis exists) -->
+            <div id="pos-visualizer-container" class="mb-4" style="display: none;">
+                <h6 class="text-white small fw-bold text-uppercase mb-2"><i class="fas fa-tags text-success me-2"></i>Part-of-Speech (POS) Syntax Highlights:</h6>
+                <div id="lemma-pos-badges" class="p-3 bg-dark rounded border border-secondary d-flex flex-wrap gap-2 min-height-80">
+                    <!-- Badges injected by JS -->
+                </div>
+            </div>
+
             <!-- Demo Output Card -->
-            <div class="row mt-4">
+            <div class="row mt-4 g-3">
                 <div class="col-md-6">
-                    <div class="text-secondary small fw-bold mb-1">Lemmatized Output (Backend Real Execution):</div>
-                    <div id="lemma-output" class="code-output">Click "Lemmatize Text" to test...</div>
+                    <div class="text-secondary small fw-bold mb-1">Lemmatized Output (Canonical Base Words):</div>
+                    <div id="lemma-output" class="code-output fs-6 text-success fw-bold">Click "Run Lemmatization & POS Tagging" to test...</div>
                 </div>
                 <div class="col-md-6">
                     <div class="text-secondary small fw-bold mb-1">Visual Word Change Diff:</div>
@@ -49,67 +58,61 @@
             </div>
         </div>
 
-        <!-- 6 Lemmatization Methods Breakdown -->
-        <h3 class="fw-bold text-white mb-4"><i class="fas fa-layer-group me-2 text-indigo"></i>6 Lemmatization Approaches</h3>
+        <!-- 5 Lemmatization Methods Breakdown -->
+        <h3 class="fw-bold text-white mb-4"><i class="fas fa-layer-group me-2 text-indigo"></i>Lemmatization &amp; POS Approaches</h3>
 
         <div class="row g-4">
-            <!-- 1. Dictionary-Based -->
+            <!-- 1. POS-Based Lemmatization (Featured) -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4 border border-success">
+                    <span class="badge badge-technique mb-2">Method 1 (Primary)</span>
+                    <h5 class="fw-bold text-white">POS-Based Lemmatization</h5>
+                    <p class="text-secondary small mb-2">Analyzes Part-Of-Speech tags (Determiner, Noun, Verb, Adjective, Adverb) before looking up lemmas. Transforms verb <code>running</code> &rarr; <code>run</code>, <code>is</code> &rarr; <code>be</code> accurately.</p>
+                    <div class="code-output small text-success">
+                        Input: "this is a book"<br>
+                        POS Tags: ["this/DT", "is/VBZ", "a/DT", "book/NN"]<br>
+                        Lemmas: ["this", "be", "a", "book"]
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. WordNet Lemmatization -->
             <div class="col-md-6">
                 <div class="glass-card h-100 p-4">
-                    <span class="badge badge-variant mb-2">Method 1</span>
+                    <span class="badge badge-variant mb-2">Method 2</span>
+                    <h5 class="fw-bold text-white">WordNet Standard Lemmatization</h5>
+                    <p class="text-secondary small mb-2">Utilizes Princeton's WordNet lexical database. Default mapping assumes Noun unless POS tag specified.</p>
+                    <div class="code-output small">Example: "cars" &rarr; "car", "running" &rarr; "running" (default Noun)</div>
+                </div>
+            </div>
+
+            <!-- 3. Context-Aware & Transformer -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Method 3</span>
+                    <h5 class="fw-bold text-white">Context-Aware &amp; Transformer POS Lemmatization</h5>
+                    <p class="text-secondary small mb-2">Uses spaCy deep neural network embeddings to assign contextually perfect lemmas for complex sentences.</p>
+                    <div class="code-output small">Example: "The meeting was organized" &rarr; "meeting" (Noun)</div>
+                </div>
+            </div>
+
+            <!-- 4. Dictionary-Based -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-variant mb-2">Method 4</span>
                     <h5 class="fw-bold text-white">Dictionary-Based Lemmatization</h5>
                     <p class="text-secondary small mb-2">Uses pre-compiled lookup tables mapping inflected words directly to canonical dictionary headwords.</p>
                     <div class="code-output small">Example: "children" &rarr; "child", "mice" &rarr; "mouse"</div>
                 </div>
             </div>
 
-            <!-- 2. Rule-Based -->
-            <div class="col-md-6">
-                <div class="glass-card h-100 p-4">
-                    <span class="badge badge-variant mb-2">Method 2</span>
-                    <h5 class="fw-bold text-white">Rule-Based Lemmatization</h5>
+            <!-- 5. Rule-Based -->
+            <div class="col-12">
+                <div class="glass-card p-4">
+                    <span class="badge badge-variant mb-2">Method 5</span>
+                    <h5 class="fw-bold text-white">Rule-Based Morphological Lemmatization</h5>
                     <p class="text-secondary small mb-2">Combines morphological inflection rules with exception lists to deduce dictionary base forms.</p>
                     <div class="code-output small">Example: "cities" &rarr; "city", "wolves" &rarr; "wolf"</div>
-                </div>
-            </div>
-
-            <!-- 3. WordNet Lemmatization -->
-            <div class="col-md-6">
-                <div class="glass-card h-100 p-4">
-                    <span class="badge badge-variant mb-2">Method 3</span>
-                    <h5 class="fw-bold text-white">WordNet Lemmatization</h5>
-                    <p class="text-secondary small mb-2">Utilizes Princeton's WordNet lexical database. Default mapping assumes Noun unless POS tag specified.</p>
-                    <div class="code-output small">Example: "cars" &rarr; "car", "running" &rarr; "running" (default Noun)</div>
-                </div>
-            </div>
-
-            <!-- 4. POS-Based Lemmatization -->
-            <div class="col-md-6">
-                <div class="glass-card h-100 p-4">
-                    <span class="badge badge-variant mb-2">Method 4</span>
-                    <h5 class="fw-bold text-white">POS-Based Lemmatization</h5>
-                    <p class="text-secondary small mb-2">Tags Part-of-Speech (Noun, Verb, Adjective, Adverb) before lemmatizing. Transforms verb `running` &rarr; `run` accurately.</p>
-                    <div class="code-output small">Example: "running" (Verb) &rarr; "run", "better" (Adjective) &rarr; "good"</div>
-                </div>
-            </div>
-
-            <!-- 5. Context-Aware Lemmatization -->
-            <div class="col-md-6">
-                <div class="glass-card h-100 p-4">
-                    <span class="badge badge-variant mb-2">Method 5</span>
-                    <h5 class="fw-bold text-white">Context-Aware Lemmatization</h5>
-                    <p class="text-secondary small mb-2">Analyzes sentence structure and dependency syntax to disambiguate words that act as different POS in context.</p>
-                    <div class="code-output small">Example: "meeting" in "We are meeting" &rarr; "meet"</div>
-                </div>
-            </div>
-
-            <!-- 6. Transformer/Contextual -->
-            <div class="col-md-6">
-                <div class="glass-card h-100 p-4">
-                    <span class="badge badge-variant mb-2">Method 6</span>
-                    <h5 class="fw-bold text-white">Transformer/Contextual Lemmatization</h5>
-                    <p class="text-secondary small mb-2">Uses deep neural network embeddings (spaCy/Transformers) to assign contextually perfect lemmas for complex sentences.</p>
-                    <div class="code-output small">Example: "The meeting was organized" &rarr; "meeting" (Noun)</div>
                 </div>
             </div>
         </div>
@@ -123,15 +126,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('lemma-run-btn');
     const input = document.getElementById('lemma-input');
     const methodSelect = document.getElementById('lemma-method');
+    const posVisualizerContainer = document.getElementById('pos-visualizer-container');
+    const posBadges = document.getElementById('lemma-pos-badges');
 
     btn.addEventListener('click', () => {
-        runTechniqueDemo(
-            '/api/lemmatize',
-            { text: input.value, type: methodSelect.value },
-            'lemma-output',
-            null,
-            'lemma-diff'
-        );
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Processing...';
+
+        fetch('/api/lemmatize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: input.value, type: methodSelect.value })
+        })
+        .then(res => res.json())
+        .then(data => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play me-2"></i> Run Lemmatization & POS Tagging';
+
+            if (data.success) {
+                // Render Lemmatized Output
+                document.getElementById('lemma-output').innerText = data.processed || '';
+
+                // Render Diff View
+                const diffContainer = document.getElementById('lemma-diff');
+                if (data.diff && data.diff.length > 0) {
+                    diffContainer.innerHTML = data.diff.map(d => 
+                        d.changed ? `<span class="badge bg-danger text-decoration-line-through me-1">${d.original}</span><span class="badge bg-success me-2">${d.processed}</span>`
+                                  : `<span class="text-muted me-2">${d.original}</span>`
+                    ).join('');
+                } else {
+                    diffContainer.innerText = data.processed || '';
+                }
+
+                // Render POS Visualizer if pos_analysis exists
+                if (data.pos_analysis && data.pos_analysis.tagged_tokens) {
+                    posVisualizerContainer.style.display = 'block';
+                    posBadges.innerHTML = '';
+                    data.pos_analysis.tagged_tokens.forEach(item => {
+                        const badge = document.createElement('div');
+                        badge.className = 'd-inline-flex flex-column align-items-center p-2 rounded bg-black border border-secondary shadow-sm';
+                        badge.style.minWidth = '70px';
+                        badge.innerHTML = `
+                            <span class="badge ${item.badge || 'bg-primary'} mb-1" style="font-size: 0.7rem; background-color: ${item.color || ''} !important;">
+                                ${item.tag} &bull; ${item.category}
+                            </span>
+                            <span class="fs-6 fw-bold text-white">${item.token}</span>
+                        `;
+                        posBadges.appendChild(badge);
+                    });
+                } else {
+                    posVisualizerContainer.style.display = 'none';
+                }
+            }
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play me-2"></i> Run Lemmatization & POS Tagging';
+            console.error(err);
+        });
     });
 
     btn.click();

@@ -78,27 +78,27 @@
             <div class="col-lg-6">
                 <div class="glass-card h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="badge badge-technique"><i class="fas fa-book me-1"></i> 6 Methods</span>
+                        <span class="badge badge-technique"><i class="fas fa-book me-1"></i> 5 Methods</span>
                         <a href="{{ url_for('lemmatization') }}" class="btn btn-outline-custom btn-sm">Deep Dive Page &rarr;</a>
                     </div>
-                    <h3 class="fw-bold text-white mb-2">Lemmatization</h3>
+                    <h3 class="fw-bold text-white mb-2">Lemmatization &amp; POS Tagging</h3>
                     <p class="text-secondary small mb-3">
-                        Uses vocabulary dictionaries and Part-of-Speech analysis to return valid, dictionary canonical base words (lemmas).
+                        Uses vocabulary dictionaries and Part-of-Speech (POS) syntactic analysis to return valid, dictionary canonical base words (lemmas).
                     </p>
                     <div class="mb-3">
-                        <strong class="text-white small d-block mb-2">Supported Methods:</strong>
+                        <strong class="text-white small d-block mb-2">Supported Approaches:</strong>
                         <div class="d-flex flex-wrap gap-1">
+                            <span class="badge badge-technique">POS-Based Lemmatization</span>
+                            <span class="badge badge-variant">WordNet</span>
+                            <span class="badge badge-variant">Context-Aware / Transformer POS</span>
                             <span class="badge badge-variant">Dictionary-Based</span>
                             <span class="badge badge-variant">Rule-Based</span>
-                            <span class="badge badge-variant">WordNet</span>
-                            <span class="badge badge-variant">POS-Based</span>
-                            <span class="badge badge-variant">Context-Aware</span>
-                            <span class="badge badge-variant">Transformer</span>
                         </div>
                     </div>
                     <div class="code-output small text-muted">
-                        Input: "The children are running and playing."<br>
-                        Output: ["child", "be", "run", "and", "play"]
+                        Input: "this is a book"<br>
+                        POS Tags: ["this/DT", "is/VBZ", "a/DT", "book/NN"]<br>
+                        Output: ["this", "be", "a", "book"]
                     </div>
                 </div>
             </div>
@@ -152,26 +152,9 @@
                         <div class="col-md-3"><span class="badge badge-variant w-100">URL Removal</span></div>
                         <div class="col-md-3"><span class="badge badge-variant w-100">Contraction Expansion</span></div>
                     </div>
-            <!-- 6. POS Tagging Card -->
-            <div class="col-12">
-                <div class="glass-card p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="badge badge-technique"><i class="fas fa-tags me-1"></i> Penn &amp; Universal Tagsets</span>
-                        <a href="{{ url_for('pos_tagging') }}" class="btn btn-outline-custom btn-sm">Deep Dive Page &rarr;</a>
-                    </div>
-                    <h3 class="fw-bold text-white mb-2">Part-Of-Speech (POS) Tagging &amp; Evaluation</h3>
-                    <p class="text-secondary small mb-3">
-                        Assigns grammatical syntactic categories (Determiner, Noun, Verb, Adjective, Preposition) to each word and measures tagger accuracy.
-                    </p>
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Determiners (DT)</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Nouns (NN / NNS / NNP)</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Verbs (VB / VBZ / VBD)</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Prepositions (IN)</span></div>
-                    </div>
                     <div class="code-output small text-muted">
-                        Input: "this is a book"<br>
-                        Output: ["this/Determiner", "is/Verb", "a/Determiner", "book/Noun"]
+                        Input: "Hello!!! Visit https://example.com 😊 &lt;p&gt;Text&lt;/p&gt;"<br>
+                        Output: "hello visit text"
                     </div>
                 </div>
             </div>

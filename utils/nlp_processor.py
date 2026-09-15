@@ -534,6 +534,7 @@ class NLPProcessor:
             "went": "go", "gone": "go", "going": "go", "goes": "go"
         }
 
+        pos_analysis = None
         if method == "dictionary":
             lemmas = [dict_map.get(w.lower(), w.lower() if w.isalnum() else w) for w in words]
             explanation = "Dictionary-Based Lemmatization checks words against a predefined lookup dictionary of canonical lemma forms."
@@ -550,9 +551,10 @@ class NLPProcessor:
             explanation = "WordNet Lemmatization utilizes the NLTK WordNet lexical database to resolve words to their valid dictionary lemmas."
 
         elif method == "pos_based":
+            pos_analysis = self.pos_tag_text(text_clean, tagset="penn")
             if HAS_NLTK and self.lemmatizer:
                 try:
-                    tagged = pos_tag(words)
+                    tagged = [(t["token"], t.get("penn_tag", t["tag"])) for t in pos_analysis["tagged_tokens"]]
                     lemmas = []
                     for w, tag in tagged:
                         if not w.isalnum():
@@ -564,9 +566,10 @@ class NLPProcessor:
                     lemmas = [dict_map.get(w.lower(), self.lemmatizer.lemmatize(w.lower())) for w in words]
             else:
                 lemmas = [dict_map.get(w.lower(), w) for w in words]
-            explanation = "POS-Based Lemmatization analyzes Part-Of-Speech tags (Noun, Verb, Adjective, Adverb) before looking up lemmas, producing high accuracy (e.g. 'running' as verb -> 'run')."
+            explanation = "POS-Based Lemmatization analyzes Part-Of-Speech tags (Noun, Verb, Adjective, Adverb) before looking up lemmas, producing high accuracy (e.g. 'this is a book' -> 'this/Determiner is/Verb a/Determiner book/Noun')."
 
         elif method in ["context_aware", "transformer"]:
+            pos_analysis = self.pos_tag_text(text_clean, tagset="penn")
             if HAS_SPACY and nlp_spacy:
                 doc = nlp_spacy(text_clean)
                 lemmas = [token.lemma_ for token in doc]
@@ -582,7 +585,10 @@ class NLPProcessor:
             explanation = "Standard lemmatization applied."
 
         processed_text = " ".join(lemmas)
-        return self._build_result(text, lemmas, "Lemmatization", method, explanation, start_time, processed_text=processed_text)
+        res = self._build_result(text, lemmas, "Lemmatization", method, explanation, start_time, processed_text=processed_text)
+        if pos_analysis:
+            res["pos_analysis"] = pos_analysis
+        return res
 
     def _rule_lemma(self, word):
         if not word.isalnum(): return word

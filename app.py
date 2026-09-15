@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 from utils.nlp_processor import nlp_engine
 
 app = Flask(__name__)
@@ -39,7 +39,7 @@ def cleaning():
 @app.route('/pos-tagging')
 @app.route('/pos')
 def pos_tagging():
-    return render_template('pos_tagging.html')
+    return redirect(url_for('lemmatization'))
 
 @app.route('/workbench')
 def workbench():
