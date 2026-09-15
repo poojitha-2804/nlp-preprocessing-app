@@ -14,44 +14,50 @@
 
         <div class="row g-4">
             <div class="col-lg-8 mx-auto">
+                <!-- Project Objective Card -->
                 <div class="glass-card p-4 mb-4">
                     <h4 class="fw-bold text-white mb-3"><i class="fas fa-bullseye me-2 text-indigo"></i>Project Objective</h4>
                     <p class="text-secondary">
                         Natural Language Processing (NLP) starts with effective text preprocessing. Without clean, well-tokenized, and normalized data, downstream machine learning models (ranging from Naive Bayes classifiers to modern Transformer Large Language Models) struggle to extract meaningful patterns.
                     </p>
-                    <p class="text-secondary">
+                    <p class="text-secondary mb-0">
                         This web platform provides a zero-setup, fully interactive visual laboratory where users can test sentences, compare preprocessing algorithms (such as Porter vs. Snowball stemmers or POS-based lemmatization), and analyze execution stats in real time.
                     </p>
-                <div class="glass-card p-4 mb-4">
-                    <h4 class="fw-bold text-white mb-3"><i class="fas fa-user-graduate me-2 text-success"></i>Project Developers</h4>
+                </div>
+
+                <!-- Project Developers Card (White Card with Green Border) -->
+                <div class="card p-4 mb-4 rounded-4 shadow-sm" style="background-color: #FFFFFF; border: 2px solid #10B981;">
+                    <h4 class="fw-bold mb-3" style="color: #0D3B11;"><i class="fas fa-user-graduate me-2 text-success"></i>Project Developers</h4>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="p-3 bg-dark rounded border border-secondary">
-                                <p class="text-white mb-1"><strong class="fs-5 text-white">V. Poojitha</strong></p>
-                                <p class="text-success fw-bold small mb-1">Department of Computer Science &amp; Engineering (AI &amp; ML)</p>
-                                <p class="text-secondary small mb-0">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
+                            <div class="p-3 rounded-3 h-100" style="background-color: #F4FBF7; border: 2px solid #10B981;">
+                                <p class="mb-1"><strong class="fs-5" style="color: #0D3B11;">V. Poojitha</strong></p>
+                                <p class="fw-bold small mb-1" style="color: #059669;">Department of Computer Science &amp; Engineering (AI &amp; ML)</p>
+                                <p class="small mb-0 text-muted">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="p-3 bg-dark rounded border border-secondary">
-                                <p class="text-white mb-1"><strong class="fs-5 text-white">R. Jai Sree Ram</strong></p>
-                                <p class="text-success fw-bold small mb-1">Department of Computer Science &amp; Engineering (AI &amp; ML)</p>
-                                <p class="text-secondary small mb-0">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
+                            <div class="p-3 rounded-3 h-100" style="background-color: #F4FBF7; border: 2px solid #10B981;">
+                                <p class="mb-1"><strong class="fs-5" style="color: #0D3B11;">R. Jai Sree Ram</strong></p>
+                                <p class="fw-bold small mb-1" style="color: #059669;">Department of Computer Science &amp; Engineering (AI &amp; ML)</p>
+                                <p class="small mb-0 text-muted">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Tech Stack Card -->
                 <div class="glass-card p-4 mb-4">
                     <h4 class="fw-bold text-white mb-3"><i class="fas fa-layer-group me-2 text-purple"></i>Architecture &amp; Tech Stack</h4>
-                    <ul class="list-unstyled text-secondary">
+                    <ul class="list-unstyled text-secondary mb-0">
                         <li class="mb-2"><strong class="text-white">Backend Engine:</strong> Python 3 + Flask Web Framework</li>
                         <li class="mb-2"><strong class="text-white">NLP Libraries:</strong> NLTK (Natural Language Toolkit), spaCy, BeautifulSoup4, Regex</li>
                         <li class="mb-2"><strong class="text-white">Frontend UI:</strong> HTML5, Vanilla CSS3 (Custom Dark Navy &amp; Indigo Glassmorphism Design System), Bootstrap 5</li>
-                        <li class="mb-2"><strong class="text-white">API Integration:</strong> Asynchronous AJAX REST endpoints with dynamic JSON response rendering</li>
+                        <li class="mb-0"><strong class="text-white">API Integration:</strong> Asynchronous AJAX REST endpoints with dynamic JSON response rendering</li>
                     </ul>
                 </div>
 
+                <!-- Call to Action Card -->
                 <div class="glass-card p-4 text-center">
                     <h5 class="fw-bold text-white mb-3">Ready to start experimenting?</h5>
                     <a href="{{ url_for('workbench') }}" class="btn btn-primary-gradient px-4">
