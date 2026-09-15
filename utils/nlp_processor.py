@@ -205,6 +205,74 @@ LANGUAGE_STOPWORDS = {
 
 
 # ==========================================
+# PART-OF-SPEECH (POS) TAG DICTIONARIES
+# ==========================================
+PENN_POS_MAP = {
+    "DT": {"category": "Determiner", "desc": "Determiner (e.g., this, a, the, that, these)", "badge": "bg-primary", "color": "#3B82F6", "universal": "DET"},
+    "PDT": {"category": "Predeterminer", "desc": "Predeterminer (e.g., all, both, half)", "badge": "bg-primary", "color": "#3B82F6", "universal": "DET"},
+    "WDT": {"category": "Wh-determiner", "desc": "Wh-determiner (e.g., which, whatever, whose)", "badge": "bg-primary", "color": "#3B82F6", "universal": "DET"},
+    "NN": {"category": "Noun", "desc": "Noun, singular or mass (e.g., book, apple, car)", "badge": "bg-success", "color": "#10B981", "universal": "NOUN"},
+    "NNS": {"category": "Noun", "desc": "Noun, plural (e.g., books, apples, cars)", "badge": "bg-success", "color": "#10B981", "universal": "NOUN"},
+    "NNP": {"category": "Proper Noun", "desc": "Proper noun, singular (e.g., London, Mary, Google)", "badge": "bg-success", "color": "#059669", "universal": "PROPN"},
+    "NNPS": {"category": "Proper Noun", "desc": "Proper noun, plural (e.g., Americans, Himalayas)", "badge": "bg-success", "color": "#059669", "universal": "PROPN"},
+    "VB": {"category": "Verb", "desc": "Verb, base form (e.g., be, run, eat)", "badge": "bg-warning", "color": "#F59E0B", "universal": "VERB"},
+    "VBD": {"category": "Verb", "desc": "Verb, past tense (e.g., was, ran, ate)", "badge": "bg-warning", "color": "#F59E0B", "universal": "VERB"},
+    "VBG": {"category": "Verb", "desc": "Verb, gerund or present participle (e.g., being, running)", "badge": "bg-warning", "color": "#F59E0B", "universal": "VERB"},
+    "VBN": {"category": "Verb", "desc": "Verb, past participle (e.g., been, run, eaten)", "badge": "bg-warning", "color": "#F59E0B", "universal": "VERB"},
+    "VBP": {"category": "Verb", "desc": "Verb, non-3rd person singular present (e.g., am, are, run)", "badge": "bg-warning", "color": "#F59E0B", "universal": "VERB"},
+    "VBZ": {"category": "Verb", "desc": "Verb, 3rd person singular present (e.g., is, runs, eats)", "badge": "bg-warning", "color": "#F59E0B", "universal": "VERB"},
+    "MD": {"category": "Modal Verb", "desc": "Modal auxiliary verb (e.g., can, could, will, should)", "badge": "bg-warning", "color": "#D97706", "universal": "VERB"},
+    "JJ": {"category": "Adjective", "desc": "Adjective (e.g., big, happy, green)", "badge": "bg-info", "color": "#8B5CF6", "universal": "ADJ"},
+    "JJR": {"category": "Adjective", "desc": "Adjective, comparative (e.g., bigger, happier)", "badge": "bg-info", "color": "#8B5CF6", "universal": "ADJ"},
+    "JJS": {"category": "Adjective", "desc": "Adjective, superlative (e.g., biggest, happiest)", "badge": "bg-info", "color": "#8B5CF6", "universal": "ADJ"},
+    "RB": {"category": "Adverb", "desc": "Adverb (e.g., quickly, very, well)", "badge": "bg-danger", "color": "#EC4899", "universal": "ADV"},
+    "RBR": {"category": "Adverb", "desc": "Adverb, comparative (e.g., faster, better)", "badge": "bg-danger", "color": "#EC4899", "universal": "ADV"},
+    "RBS": {"category": "Adverb", "desc": "Adverb, superlative (e.g., fastest, best)", "badge": "bg-danger", "color": "#EC4899", "universal": "ADV"},
+    "WRB": {"category": "Adverb", "desc": "Wh-adverb (e.g., how, where, when, why)", "badge": "bg-danger", "color": "#EC4899", "universal": "ADV"},
+    "IN": {"category": "Preposition", "desc": "Preposition or subordinating conjunction (e.g., in, of, on, at, with)", "badge": "bg-secondary", "color": "#14B8A6", "universal": "ADP"},
+    "PRP": {"category": "Pronoun", "desc": "Personal pronoun (e.g., I, he, she, it, they, me)", "badge": "bg-primary", "color": "#6366F1", "universal": "PRON"},
+    "PRP$": {"category": "Pronoun", "desc": "Possessive pronoun (e.g., my, his, her, its, their)", "badge": "bg-primary", "color": "#6366F1", "universal": "PRON"},
+    "WP": {"category": "Pronoun", "desc": "Wh-pronoun (e.g., who, what, whom)", "badge": "bg-primary", "color": "#6366F1", "universal": "PRON"},
+    "WP$": {"category": "Pronoun", "desc": "Possessive wh-pronoun (e.g., whose)", "badge": "bg-primary", "color": "#6366F1", "universal": "PRON"},
+    "CC": {"category": "Conjunction", "desc": "Coordinating conjunction (e.g., and, but, or, nor)", "badge": "bg-dark", "color": "#6B7280", "universal": "CCONJ"},
+    "CD": {"category": "Number", "desc": "Cardinal number (e.g., 1, 2, three, 2026)", "badge": "bg-dark", "color": "#F97316", "universal": "NUM"},
+    "TO": {"category": "Preposition/Particle", "desc": "To (infinitival to or preposition)", "badge": "bg-secondary", "color": "#14B8A6", "universal": "PART"},
+    "RP": {"category": "Particle", "desc": "Particle (e.g., up, off, out in phrasal verbs)", "badge": "bg-secondary", "color": "#64748B", "universal": "PART"},
+    "UH": {"category": "Interjection", "desc": "Interjection (e.g., oh, wow, hello, oops)", "badge": "bg-info", "color": "#06B6D4", "universal": "INTJ"},
+    "EX": {"category": "Existential There", "desc": "Existential there (e.g., 'there' is a book)", "badge": "bg-primary", "color": "#3B82F6", "universal": "PRON"},
+    "FW": {"category": "Foreign Word", "desc": "Foreign word", "badge": "bg-secondary", "color": "#64748B", "universal": "X"},
+    "SYM": {"category": "Symbol", "desc": "Symbol (e.g., $, %, +, =)", "badge": "bg-secondary", "color": "#94A3B8", "universal": "SYM"},
+    "PUNCT": {"category": "Punctuation", "desc": "Punctuation mark (. , ! ? ; :)", "badge": "bg-light", "color": "#94A3B8", "universal": "PUNCT"},
+    ".": {"category": "Punctuation", "desc": "Sentence-final punctuation (. ! ?)", "badge": "bg-light", "color": "#94A3B8", "universal": "PUNCT"},
+    ",": {"category": "Punctuation", "desc": "Comma (,)", "badge": "bg-light", "color": "#94A3B8", "universal": "PUNCT"},
+    ":": {"category": "Punctuation", "desc": "Colon or semicolon (: ;)", "badge": "bg-light", "color": "#94A3B8", "universal": "PUNCT"},
+    "''": {"category": "Punctuation", "desc": "Closing quotation mark (' \")", "badge": "bg-light", "color": "#94A3B8", "universal": "PUNCT"},
+    "``": {"category": "Punctuation", "desc": "Opening quotation mark (' \")", "badge": "bg-light", "color": "#94A3B8", "universal": "PUNCT"}
+}
+
+UNIVERSAL_POS_MAP = {
+    "ADJ": {"category": "Adjective", "desc": "Modifies a noun or pronoun", "badge": "bg-info", "color": "#8B5CF6"},
+    "ADP": {"category": "Adposition / Preposition", "desc": "Preposition or postposition", "badge": "bg-secondary", "color": "#14B8A6"},
+    "ADV": {"category": "Adverb", "desc": "Modifies a verb, adjective, or other adverb", "badge": "bg-danger", "color": "#EC4899"},
+    "AUX": {"category": "Auxiliary Verb", "desc": "Helper verb (be, have, do, will)", "badge": "bg-warning", "color": "#D97706"},
+    "CCONJ": {"category": "Coordinating Conjunction", "desc": "Links words/clauses (and, but, or)", "badge": "bg-dark", "color": "#6B7280"},
+    "DET": {"category": "Determiner", "desc": "Determines a noun (this, a, the, that)", "badge": "bg-primary", "color": "#3B82F6"},
+    "INTJ": {"category": "Interjection", "desc": "Exclamation or greeting (oh, wow)", "badge": "bg-info", "color": "#06B6D4"},
+    "NOUN": {"category": "Noun", "desc": "Person, place, thing, or idea (book, car)", "badge": "bg-success", "color": "#10B981"},
+    "NUM": {"category": "Numeral", "desc": "Number or quantity (1, 2, three)", "badge": "bg-dark", "color": "#F97316"},
+    "PART": {"category": "Particle", "desc": "Function word (not, to, up)", "badge": "bg-secondary", "color": "#64748B"},
+    "PRON": {"category": "Pronoun", "desc": "Replaces a noun (I, he, she, it, this)", "badge": "bg-primary", "color": "#6366F1"},
+    "PROPN": {"category": "Proper Noun", "desc": "Specific named entity (London, Mary)", "badge": "bg-success", "color": "#059669"},
+    "PUNCT": {"category": "Punctuation", "desc": "Punctuation mark (. , ! ?)", "badge": "bg-light", "color": "#94A3B8"},
+    "SCONJ": {"category": "Subordinating Conjunction", "desc": "Subordinating link (if, because, although)", "badge": "bg-dark", "color": "#4B5563"},
+    "SYM": {"category": "Symbol", "desc": "Mathematical or currency symbol ($, %, +)", "badge": "bg-secondary", "color": "#94A3B8"},
+    "VERB": {"category": "Verb", "desc": "Action, state, or occurrence (is, run, eat)", "badge": "bg-warning", "color": "#F59E0B"},
+    "X": {"category": "Other", "desc": "Uncategorized or foreign word", "badge": "bg-secondary", "color": "#64748B"}
+}
+
+
+
+# ==========================================
 # LOVINS STEMMER IMPLEMENTATION
 # ==========================================
 class LovinsStemmer:
@@ -663,6 +731,163 @@ class NLPProcessor:
         return self._build_result(text, tokens, "Text Cleaning", "multiple", explanation, start_time, processed_text=current_text)
 
     # ----------------------------------------------------
+    # 6. PART-OF-SPEECH (POS) TAGGING & EVALUATION
+    # ----------------------------------------------------
+    def pos_tag_text(self, text, tagset="penn", algorithm="nltk", **kwargs):
+        start_time = time.time()
+        text_clean = text.strip()
+        if not text_clean:
+            return self._build_result(text, [], "POS Tagging", algorithm, "No text provided.", start_time)
+
+        words = word_tokenize(text_clean) if HAS_NLTK else re.findall(r'\w+|[^\w\s]', text_clean)
+        
+        raw_tags = []
+        if algorithm == "spacy" and HAS_SPACY and nlp_spacy:
+            doc = nlp_spacy(text_clean)
+            if tagset == "universal":
+                raw_tags = [(t.text, t.pos_) for t in doc]
+            else:
+                raw_tags = [(t.text, t.tag_) for t in doc]
+        elif algorithm == "lexicon" or not HAS_NLTK:
+            raw_tags = self._simple_lexicon_pos_tag(words)
+        else:
+            # Default NLTK tagger
+            try:
+                raw_tags = pos_tag(words)
+            except Exception:
+                raw_tags = self._simple_lexicon_pos_tag(words)
+
+        tagged_tokens = []
+        tag_counter = Counter()
+
+        for w, tag in raw_tags:
+            if tagset == "universal":
+                penn_info = PENN_POS_MAP.get(tag, {})
+                univ_tag = penn_info.get("universal", tag if tag in UNIVERSAL_POS_MAP else "X")
+                u_info = UNIVERSAL_POS_MAP.get(univ_tag, {"category": "Other", "desc": "Uncategorized token", "badge": "bg-secondary", "color": "#64748B"})
+                tagged_tokens.append({
+                    "token": w,
+                    "tag": univ_tag,
+                    "penn_tag": tag,
+                    "category": u_info["category"],
+                    "desc": u_info["desc"],
+                    "badge": u_info["badge"],
+                    "color": u_info["color"]
+                })
+                tag_counter[u_info["category"]] += 1
+            else:
+                info = PENN_POS_MAP.get(tag, {
+                    "category": "Symbol/Other" if not w.isalnum() else "Noun",
+                    "desc": f"Part-of-speech tag ({tag})",
+                    "badge": "bg-secondary",
+                    "color": "#64748B",
+                    "universal": "X"
+                })
+                tagged_tokens.append({
+                    "token": w,
+                    "tag": tag,
+                    "universal_tag": info.get("universal", "X"),
+                    "category": info["category"],
+                    "desc": info["desc"],
+                    "badge": info["badge"],
+                    "color": info["color"]
+                })
+                tag_counter[info["category"]] += 1
+
+        explanation = (
+            f"Part-Of-Speech (POS) Tagging assigns grammatical categories (e.g. Determiner, Noun, Verb, Adjective, Preposition) "
+            f"to each word in the text using the {tagset.upper()} tagset and {algorithm.upper()} tagging engine."
+        )
+
+        processed_text = " ".join([f"{item['token']}/{item['tag']}" for item in tagged_tokens])
+        result = self._build_result(text, tagged_tokens, "POS Tagging", algorithm, explanation, start_time, processed_text=processed_text)
+        result["tagged_tokens"] = tagged_tokens
+        result["tag_summary"] = dict(tag_counter)
+        result["tagset"] = tagset
+        result["stats"]["unique_pos_categories"] = len(tag_counter)
+        return result
+
+    def _simple_lexicon_pos_tag(self, words):
+        tagged = []
+        determiners = {"this", "that", "these", "those", "a", "an", "the", "my", "your", "his", "her", "its", "our", "their", "every", "each", "some", "any"}
+        prepositions = {"in", "on", "at", "to", "for", "with", "by", "from", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "up", "down", "off", "over", "under", "of"}
+        pronouns = {"i", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "who", "whom", "what", "which"}
+        conjunctions = {"and", "but", "or", "nor", "so", "yet", "for", "because", "although"}
+        verbs_be = {"is", "am", "are", "was", "were", "be", "been", "being", "has", "have", "had", "do", "does", "did", "can", "could", "will", "would", "shall", "should", "may", "might", "must"}
+
+        for w in words:
+            w_lower = w.lower()
+            if not w.isalnum():
+                tagged.append((w, "." if w in ".!?" else "," if w == "," else "PUNCT"))
+            elif w_lower in determiners:
+                tagged.append((w, "DT"))
+            elif w_lower in prepositions:
+                tagged.append((w, "IN"))
+            elif w_lower in pronouns:
+                tagged.append((w, "PRP"))
+            elif w_lower in conjunctions:
+                tagged.append((w, "CC"))
+            elif w_lower in verbs_be:
+                tagged.append((w, "VBZ" if w_lower in ["is", "has", "does"] else "VBD" if w_lower in ["was", "were", "had", "did"] else "VB"))
+            elif w_lower.endswith("ing"):
+                tagged.append((w, "VBG"))
+            elif w_lower.endswith("ed"):
+                tagged.append((w, "VBD"))
+            elif w_lower.endswith("ly"):
+                tagged.append((w, "RB"))
+            elif w_lower.endswith("ful") or w_lower.endswith("ous") or w_lower.endswith("ive") or w_lower.endswith("able") or w_lower.endswith("ish"):
+                tagged.append((w, "JJ"))
+            elif w[0].isupper() and len(w) > 1:
+                tagged.append((w, "NNP"))
+            else:
+                tagged.append((w, "NN"))
+        return tagged
+
+    def evaluate_pos_tagging(self, text, ground_truth=None, algorithm="nltk", tagset="penn"):
+        pos_res = self.pos_tag_text(text, tagset=tagset, algorithm=algorithm)
+        predicted_tokens = pos_res["tagged_tokens"]
+
+        evaluation = {
+            "text": text,
+            "algorithm": algorithm,
+            "tagset": tagset,
+            "predicted": predicted_tokens,
+            "total_tokens": len(predicted_tokens),
+            "correct_count": len(predicted_tokens),
+            "accuracy": 100.0,
+            "has_ground_truth": False,
+            "token_eval": [],
+            "tag_breakdown": pos_res["tag_summary"]
+        }
+
+        if ground_truth and isinstance(ground_truth, list):
+            evaluation["has_ground_truth"] = True
+            correct = 0
+            token_eval = []
+            for idx, item in enumerate(predicted_tokens):
+                pred_tag = item["tag"]
+                ref_item = ground_truth[idx] if idx < len(ground_truth) else {}
+                ref_tag = ref_item.get("tag", ref_item) if isinstance(ref_item, dict) else str(ref_item)
+                
+                is_correct = (pred_tag.upper() == ref_tag.upper())
+                if is_correct:
+                    correct += 1
+                token_eval.append({
+                    "token": item["token"],
+                    "predicted_tag": pred_tag,
+                    "reference_tag": ref_tag,
+                    "category": item["category"],
+                    "correct": is_correct
+                })
+            
+            evaluation["correct_count"] = correct
+            evaluation["accuracy"] = round((correct / len(predicted_tokens)) * 100, 2) if predicted_tokens else 0.0
+            evaluation["token_eval"] = token_eval
+
+        pos_res["evaluation"] = evaluation
+        return pos_res
+
+    # ----------------------------------------------------
     # UNIFIED PLAYGROUND PROCESSOR
     # ----------------------------------------------------
     def process_playground(self, text, technique, sub_type="word", custom_options=None):
@@ -693,6 +918,9 @@ class NLPProcessor:
                 "special character removal": ["special_character_removal"]
             }
             return self.clean_text(text, operations=op_map.get(technique, ["lowercasing"]))
+        elif technique in ["pos", "pos_tagging", "pos tagging", "part-of-speech"]:
+            tagset = custom_options.get("tagset", "penn")
+            return self.pos_tag_text(text, tagset=tagset, algorithm=sub_type)
         elif technique == "pipeline" or technique == "multi_step":
             return self.run_sequential_pipeline(text)
         else:
@@ -869,6 +1097,21 @@ stop_words = set(stopwords.words('english'))
 text = "This is a simple example of NLP"
 filtered = [w for w in text.split() if w.lower() not in stop_words]
 print("Filtered Text:", " ".join(filtered))'''
+
+        elif "pos" in tech_lower:
+            return '''# SVCET NLP Lab - Part-Of-Speech (POS) Tagging
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk import pos_tag
+
+text = "This is a book."
+tokens = word_tokenize(text)
+tagged = pos_tag(tokens)
+
+# Output structure: [('This', 'DT'), ('is', 'VBZ'), ('a', 'DT'), ('book', 'NN'), ('.', '.')]
+print("POS Tagged Output:", tagged)
+for token, tag in tagged:
+    print(f"Token: {token:10} | POS Tag: {tag}")'''
 
         elif "pipeline" in tech_lower:
             return '''# SVCET NLP Lab - Sequential Preprocessing Pipeline

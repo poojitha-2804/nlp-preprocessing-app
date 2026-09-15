@@ -36,6 +36,11 @@ def stopwords():
 def cleaning():
     return render_template('cleaning.html')
 
+@app.route('/pos-tagging')
+@app.route('/pos')
+def pos_tagging():
+    return render_template('pos_tagging.html')
+
 @app.route('/workbench')
 def workbench():
     return render_template('playground.html')
@@ -123,6 +128,23 @@ def api_clean():
         return jsonify({"success": False, "error": "Please enter some text before processing."}), 400
 
     result = nlp_engine.clean_text(text, operations=operations)
+    return jsonify(result)
+
+@app.route('/api/pos-tag', methods=['POST'])
+def api_pos_tag():
+    data = request.get_json() or {}
+    text = data.get('text', '')
+    tagset = data.get('tagset', 'penn')
+    algorithm = data.get('algorithm', 'nltk')
+    ground_truth = data.get('ground_truth', None)
+
+    if not text.strip():
+        return jsonify({"success": False, "error": "Please enter some text before processing."}), 400
+
+    if ground_truth:
+        result = nlp_engine.evaluate_pos_tagging(text, ground_truth=ground_truth, algorithm=algorithm, tagset=tagset)
+    else:
+        result = nlp_engine.pos_tag_text(text, tagset=tagset, algorithm=algorithm)
     return jsonify(result)
 
 @app.route('/api/process', methods=['POST'])

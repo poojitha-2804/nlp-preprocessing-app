@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 venv/
 __pycache__/
 *.pyc
 .env
 .DS_Store
+=======
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+env/
+.idea/
+.vscode/
+scratch/
+>>>>>>> 6e4648f (Add POS Tagging engine, evaluation metrics, and update team developers)

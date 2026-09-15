@@ -46,6 +46,9 @@
                         <a class="nav-link" href="{{ url_for('techniques') }}"><i class="fas fa-layer-group me-1"></i> Techniques</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('pos_tagging') }}"><i class="fas fa-tags me-1"></i> POS Tagging</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('workbench') }}"><i class="fas fa-flask me-1"></i> NLP Workbench</a>
                     </li>
                     <li class="nav-item">
@@ -81,6 +84,7 @@
                     <ul class="list-unstyled small">
                         <li class="mb-2"><a href="{{ url_for('index') }}">Home</a></li>
                         <li class="mb-2"><a href="{{ url_for('techniques') }}">Techniques</a></li>
+                        <li class="mb-2"><a href="{{ url_for('pos_tagging') }}">POS Tagging</a></li>
                         <li class="mb-2"><a href="{{ url_for('workbench') }}">NLP Workbench</a></li>
                         <li class="mb-2"><a href="{{ url_for('about') }}">About</a></li>
                     </ul>
@@ -93,6 +97,7 @@
                         <li class="mb-2"><a href="{{ url_for('lemmatization') }}">Lemmatization (6 Methods)</a></li>
                         <li class="mb-2"><a href="{{ url_for('stopwords') }}">Stop Word Removal</a></li>
                         <li class="mb-2"><a href="{{ url_for('cleaning') }}">Text Cleaning & Normalization</a></li>
+                        <li class="mb-2"><a href="{{ url_for('pos_tagging') }}">POS Tagging & Evaluation</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -107,9 +112,9 @@
             </div>
             <hr class="border-secondary opacity-25">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary py-2">
-                <div>&copy; 2026 SVCET NLP . Developed by V. Poojitha, CSE (AI &amp; ML)</div>
+                <div>&copy; 2026 SVCET NLP . Developed by V. Poojitha &amp; R. Jai Sree Ram, CSE (AI &amp; ML)</div>
                 <div class="mt-2 mt-md-0">
-                    <span class="badge badge-technique"><i class="fas fa-university me-1"></i> Sri Venkateswara College of Engineering &amp; Technology (SVCET)</span>
+                    <span class="badge badge-technique"><i class="fas fa-university me-1"></i> Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</span>
                 </div>
             </div>
         </div>

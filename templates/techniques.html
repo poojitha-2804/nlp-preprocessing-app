@@ -152,9 +152,26 @@
                         <div class="col-md-3"><span class="badge badge-variant w-100">URL Removal</span></div>
                         <div class="col-md-3"><span class="badge badge-variant w-100">Contraction Expansion</span></div>
                     </div>
+            <!-- 6. POS Tagging Card -->
+            <div class="col-12">
+                <div class="glass-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge badge-technique"><i class="fas fa-tags me-1"></i> Penn &amp; Universal Tagsets</span>
+                        <a href="{{ url_for('pos_tagging') }}" class="btn btn-outline-custom btn-sm">Deep Dive Page &rarr;</a>
+                    </div>
+                    <h3 class="fw-bold text-white mb-2">Part-Of-Speech (POS) Tagging &amp; Evaluation</h3>
+                    <p class="text-secondary small mb-3">
+                        Assigns grammatical syntactic categories (Determiner, Noun, Verb, Adjective, Preposition) to each word and measures tagger accuracy.
+                    </p>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-3"><span class="badge badge-variant w-100">Determiners (DT)</span></div>
+                        <div class="col-md-3"><span class="badge badge-variant w-100">Nouns (NN / NNS / NNP)</span></div>
+                        <div class="col-md-3"><span class="badge badge-variant w-100">Verbs (VB / VBZ / VBD)</span></div>
+                        <div class="col-md-3"><span class="badge badge-variant w-100">Prepositions (IN)</span></div>
+                    </div>
                     <div class="code-output small text-muted">
-                        Input: "Hello!!! Visit https://example.com 😊 &lt;p&gt;Text&lt;/p&gt;"<br>
-                        Output: "hello visit text"
+                        Input: "this is a book"<br>
+                        Output: ["this/Determiner", "is/Verb", "a/Determiner", "book/Noun"]
                     </div>
                 </div>
             </div>

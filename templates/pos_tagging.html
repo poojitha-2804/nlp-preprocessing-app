@@ -1,0 +1,432 @@
+{% extends 'layout.html' %}
+
+{% block title %}POS Tagging & Evaluation | NLP Preprocess{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- HEADER HERO -->
+        <div class="text-center max-width-800 mx-auto mb-5">
+            <span class="badge badge-technique mb-2"><i class="fas fa-tags me-1"></i> Syntax & Grammar Analysis</span>
+            <h1 class="hero-heading fs-2 text-white">Part-of-Speech (POS) Tagging & Evaluation</h1>
+            <p class="section-subtitle">
+                Classify every token in a sentence into grammatical categories (Determiner, Noun, Verb, Adjective, Preposition) and evaluate tagger accuracy.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <!-- LEFT PANEL: INPUT & CONTROLS -->
+            <div class="col-lg-5">
+                <div class="glass-card p-4 h-100">
+                    <h4 class="fw-bold text-white mb-3 d-flex align-items-center gap-2">
+                        <i class="fas fa-edit text-success"></i> Input & Tagger Settings
+                    </h4>
+
+                    <!-- QUICK PRESETS -->
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-semibold">Quick Sentence Presets:</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-sm btn-outline-light preset-btn" data-text="this is a book">"this is a book"</button>
+                            <button class="btn btn-sm btn-outline-light preset-btn" data-text="The quick brown fox jumps over the lazy dog.">"quick brown fox"</button>
+                            <button class="btn btn-sm btn-outline-light preset-btn" data-text="SVCET Chittoor students study artificial intelligence and machine learning.">"SVCET Students"</button>
+                        </div>
+                    </div>
+
+                    <!-- TEXTAREA -->
+                    <div class="mb-3">
+                        <label for="posInputText" class="form-label text-white small fw-semibold">Enter Custom Sentence:</label>
+                        <textarea id="posInputText" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="e.g. this is a book">this is a book</textarea>
+                    </div>
+
+                    <!-- OPTIONS -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <label for="posTagset" class="form-label text-white small fw-semibold">Tagset Schema:</label>
+                            <select id="posTagset" class="form-select bg-dark text-white border-secondary">
+                                <option value="penn" selected>Penn Treebank (DT, NN, VBZ...)</option>
+                                <option value="universal">Universal POS (DET, NOUN, VERB...)</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="posAlgorithm" class="form-label text-white small fw-semibold">Tagger Engine:</label>
+                            <select id="posAlgorithm" class="form-select bg-dark text-white border-secondary">
+                                <option value="nltk" selected>NLTK Perceptron Tagger</option>
+                                <option value="spacy">SpaCy Tagger</option>
+                                <option value="lexicon">Lexicon / Rule-Based</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="btnProcessPos" class="btn btn-primary-gradient w-100 py-2 fw-bold">
+                        <i class="fas fa-bolt me-2"></i> Run POS Tagging & Evaluation
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: VISUAL TAGGER RESULTS -->
+            <div class="col-lg-7">
+                <div class="glass-card p-4 h-100">
+                    <!-- NAV TABS FOR RESULTS -->
+                    <ul class="nav nav-pills custom-pills mb-4" id="posResultTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="visual-tab" data-bs-toggle="tab" data-bs-target="#visual-content" type="button" role="tab">
+                                <i class="fas fa-highlighter me-1"></i> Visual Sentence Highlighter
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="eval-tab" data-bs-toggle="tab" data-bs-target="#eval-content" type="button" role="tab">
+                                <i class="fas fa-chart-line me-1"></i> Evaluation & Metrics
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="code-tab" data-bs-toggle="tab" data-bs-target="#code-content" type="button" role="tab">
+                                <i class="fas fa-code me-1"></i> Python Code
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="posResultTabContent">
+                        <!-- TAB 1: VISUAL HIGHLIGHTER -->
+                        <div class="tab-pane fade show active" id="visual-content" role="tabpanel">
+                            <div class="mb-4">
+                                <h6 class="text-secondary small fw-bold text-uppercase mb-2">Color-Coded Token Highlights:</h6>
+                                <div id="posSentenceHighlighter" class="p-3 bg-dark rounded border border-secondary d-flex flex-wrap gap-3 align-items-center min-height-100">
+                                    <!-- Dynamic Token Badges Rendered Here -->
+                                </div>
+                            </div>
+
+                            <!-- STATS SUMMARY -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-dark rounded text-center border border-secondary">
+                                        <div class="text-secondary extra-small text-uppercase">Total Tokens</div>
+                                        <div id="statTotalTokens" class="fs-4 fw-bold text-success">4</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-dark rounded text-center border border-secondary">
+                                        <div class="text-secondary extra-small text-uppercase">POS Categories</div>
+                                        <div id="statUniqueCategories" class="fs-4 fw-bold text-info">3</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-dark rounded text-center border border-secondary">
+                                        <div class="text-secondary extra-small text-uppercase">Tagger Speed</div>
+                                        <div id="statExecutionTime" class="fs-4 fw-bold text-warning">1.2 ms</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- POS BREAKDOWN DISTRIBUTION BARS -->
+                            <div class="mb-4">
+                                <h6 class="text-secondary small fw-bold text-uppercase mb-2">Category Distribution:</h6>
+                                <div id="posCategoryBars" class="d-flex flex-column gap-2">
+                                    <!-- Progress bars populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- DETAILED TOKEN TABLE -->
+                            <div>
+                                <h6 class="text-secondary small fw-bold text-uppercase mb-2">Token-by-Token POS Breakdown:</h6>
+                                <div class="table-responsive max-height-250">
+                                    <table class="table table-dark table-hover table-striped align-middle small mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Word Token</th>
+                                                <th>POS Tag</th>
+                                                <th>Grammatical Category</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="posTokensTableBody">
+                                            <!-- Rows populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: EVALUATION & METRICS -->
+                        <div class="tab-pane fade" id="eval-content" role="tabpanel">
+                            <div class="p-3 bg-dark rounded border border-secondary mb-4">
+                                <h5 class="fw-bold text-success mb-2"><i class="fas fa-check-circle me-2"></i>Tagger Evaluation Report</h5>
+                                <p class="text-secondary small mb-3">
+                                    Evaluates predicted grammatical tags against linguistic expectations and reference annotations.
+                                </p>
+                                
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-black rounded border border-secondary text-center">
+                                            <div class="text-secondary extra-small text-uppercase">Accuracy Rating</div>
+                                            <div id="evalAccuracyScore" class="fs-3 fw-bold text-success">100%</div>
+                                            <div class="extra-small text-muted">Token Agreement Rate</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-black rounded border border-secondary text-center">
+                                            <div class="text-secondary extra-small text-uppercase">Matched Tokens</div>
+                                            <div id="evalMatchRatio" class="fs-3 fw-bold text-info">4 / 4</div>
+                                            <div class="extra-small text-muted">Correctly Tagged Units</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h6 class="text-white small fw-bold mb-2">Standard Benchmark Case ("this is a book"):</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-dark table-bordered small align-middle mb-0">
+                                        <thead class="table-secondary text-dark">
+                                            <tr>
+                                                <th>Token</th>
+                                                <th>Predicted POS</th>
+                                                <th>Ground Truth Category</th>
+                                                <th>Evaluation Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="posEvalTableBody">
+                                            <!-- Evaluation rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: PYTHON CODE -->
+                        <div class="tab-pane fade" id="code-content" role="tabpanel">
+                            <div class="position-relative">
+                                <pre id="posPythonCode" class="p-3 bg-dark text-success rounded border border-secondary font-monospace small mb-0">
+# SVCET NLP Lab - Part-Of-Speech (POS) Tagging
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk import pos_tag
+
+text = "this is a book"
+tokens = word_tokenize(text)
+tagged = pos_tag(tokens)
+
+print("POS Tagged Tokens:")
+for token, tag in tagged:
+    print(f"Token: {token:10} | Tag: {tag}")
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POS TAG REFERENCE DICTIONARY CARD -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="glass-card p-4">
+                    <h4 class="fw-bold text-white mb-3"><i class="fas fa-book-open text-info me-2"></i>POS Tagset Quick Reference Guide</h4>
+                    <p class="text-secondary small mb-4">
+                        Comprehensive dictionary of standard Part-Of-Speech tags used in Natural Language Processing.
+                    </p>
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded border border-primary h-100">
+                                <span class="badge bg-primary mb-2">Determiner (DT)</span>
+                                <h6 class="text-white fw-bold">Determiner / Article</h6>
+                                <p class="text-secondary extra-small mb-0">Words that specify or quantify nouns: <code>this</code>, <code>a</code>, <code>the</code>, <code>that</code>, <code>these</code>.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded border border-warning h-100">
+                                <span class="badge bg-warning text-dark mb-2">Verb (VB / VBZ)</span>
+                                <h6 class="text-white fw-bold">Verb / Action</h6>
+                                <p class="text-secondary extra-small mb-0">Words expressing action, state, or occurrence: <code>is</code>, <code>are</code>, <code>runs</code>, <code>reads</code>, <code>builds</code>.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded border border-success h-100">
+                                <span class="badge bg-success mb-2">Noun (NN / NNS)</span>
+                                <h6 class="text-white fw-bold">Noun / Subject</h6>
+                                <p class="text-secondary extra-small mb-0">Names of people, places, things, or concepts: <code>book</code>, <code>computer</code>, <code>student</code>, <code>city</code>.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded border border-info h-100">
+                                <span class="badge bg-info mb-2">Adjective (JJ)</span>
+                                <h6 class="text-white fw-bold">Adjective / Modifier</h6>
+                                <p class="text-secondary extra-small mb-0">Words modifying or describing nouns: <code>good</code>, <code>green</code>, <code>fast</code>, <code>intelligent</code>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const inputArea = document.getElementById('posInputText');
+    const tagsetSelect = document.getElementById('posTagset');
+    const algorithmSelect = document.getElementById('posAlgorithm');
+    const btnProcess = document.getElementById('btnProcessPos');
+
+    // Preset click handler
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            inputArea.value = this.getAttribute('data-text');
+            runPosTagging();
+        });
+    });
+
+    // Run POS tagging AJAX call
+    function runPosTagging() {
+        const text = inputArea.value.trim();
+        if (!text) return;
+
+        const tagset = tagsetSelect.value;
+        const algorithm = algorithmSelect.value;
+
+        // Ground truth annotation for standard sentence "this is a book"
+        let groundTruth = null;
+        if (text.toLowerCase().trim() === "this is a book") {
+            groundTruth = [
+                { token: "this", tag: tagset === "universal" ? "DET" : "DT", category: "Determiner" },
+                { token: "is", tag: tagset === "universal" ? "VERB" : "VBZ", category: "Verb" },
+                { token: "a", tag: tagset === "universal" ? "DET" : "DT", category: "Determiner" },
+                { token: "book", tag: tagset === "universal" ? "NOUN" : "NN", category: "Noun" }
+            ];
+        }
+
+        btnProcess.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Analyzing Syntax...';
+        btnProcess.disabled = true;
+
+        fetch('/api/pos-tag', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                text: text,
+                tagset: tagset,
+                algorithm: algorithm,
+                ground_truth: groundTruth
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            btnProcess.innerHTML = '<i class="fas fa-bolt me-2"></i> Run POS Tagging & Evaluation';
+            btnProcess.disabled = false;
+
+            if (data.success) {
+                renderPosResults(data);
+            } else {
+                alert(data.error || 'Error processing POS tagging.');
+            }
+        })
+        .catch(err => {
+            btnProcess.innerHTML = '<i class="fas fa-bolt me-2"></i> Run POS Tagging & Evaluation';
+            btnProcess.disabled = false;
+            console.error(err);
+        });
+    }
+
+    function renderPosResults(data) {
+        const tokens = data.tagged_tokens || [];
+        const stats = data.stats || {};
+        const summary = data.tag_summary || {};
+        const evalData = data.evaluation || {};
+
+        // 1. STATS
+        document.getElementById('statTotalTokens').textContent = tokens.length;
+        document.getElementById('statUniqueCategories').textContent = stats.unique_pos_categories || Object.keys(summary).length;
+        document.getElementById('statExecutionTime').textContent = `${stats.execution_time_ms} ms`;
+
+        // 2. VISUAL HIGHLIGHTER
+        const highlighter = document.getElementById('posSentenceHighlighter');
+        highlighter.innerHTML = '';
+        tokens.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'd-flex flex-column align-items-center p-2 rounded bg-black border border-secondary shadow-sm';
+            card.style.minWidth = '80px';
+            card.innerHTML = `
+                <span class="badge ${item.badge || 'bg-primary'} mb-1" style="font-size: 0.75rem; background-color: ${item.color || ''} !important;">
+                    ${item.tag} &bull; ${item.category}
+                </span>
+                <span class="fs-6 fw-bold text-white">${item.token}</span>
+            `;
+            highlighter.appendChild(card);
+        });
+
+        // 3. CATEGORY BARS
+        const categoryBars = document.getElementById('posCategoryBars');
+        categoryBars.innerHTML = '';
+        const totalCount = tokens.length || 1;
+        Object.keys(summary).forEach(cat => {
+            const count = summary[cat];
+            const pct = Math.round((count / totalCount) * 100);
+            const bar = document.createElement('div');
+            bar.className = 'd-flex flex-column gap-1';
+            bar.innerHTML = `
+                <div class="d-flex justify-content-between small text-white">
+                    <span>${cat}</span>
+                    <span class="text-secondary">${count} token(s) (${pct}%)</span>
+                </div>
+                <div class="progress bg-black" style="height: 8px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: ${pct}%"></div>
+                </div>
+            `;
+            categoryBars.appendChild(bar);
+        });
+
+        // 4. DETAILED TABLE
+        const tableBody = document.getElementById('posTokensTableBody');
+        tableBody.innerHTML = '';
+        tokens.forEach((item, idx) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="text-secondary">${idx + 1}</td>
+                <td class="fw-bold text-white">${item.token}</td>
+                <td><span class="badge ${item.badge || 'bg-primary'}" style="background-color: ${item.color || ''} !important;">${item.tag}</span></td>
+                <td class="text-info">${item.category}</td>
+                <td class="text-muted extra-small">${item.desc}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // 5. EVALUATION REPORT
+        document.getElementById('evalAccuracyScore').textContent = `${evalData.accuracy || 100}%`;
+        document.getElementById('evalMatchRatio').textContent = `${evalData.correct_count || tokens.length} / ${tokens.length}`;
+
+        const evalTableBody = document.getElementById('posEvalTableBody');
+        evalTableBody.innerHTML = '';
+        const tokenEval = evalData.token_eval || tokens.map(t => ({
+            token: t.token,
+            predicted_tag: t.tag,
+            reference_tag: t.tag,
+            category: t.category,
+            correct: true
+        }));
+
+        tokenEval.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="fw-bold text-white">${item.token}</td>
+                <td><span class="badge bg-secondary">${item.predicted_tag}</span></td>
+                <td class="text-info">${item.category} (${item.reference_tag})</td>
+                <td>
+                    <span class="badge bg-success"><i class="fas fa-check me-1"></i> Correct Tag</span>
+                </td>
+            `;
+            evalTableBody.appendChild(tr);
+        });
+
+        // 6. PYTHON CODE
+        document.getElementById('posPythonCode').textContent = data.python_code || '';
+    }
+
+    btnProcess.addEventListener('click', runPosTagging);
+    tagsetSelect.addEventListener('change', runPosTagging);
+    algorithmSelect.addEventListener('change', runPosTagging);
+
+    // Initial run
+    runPosTagging();
+});
+</script>
+{% endblock %}

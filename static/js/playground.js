@@ -84,6 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
             { value: 'url_removal', label: 'URL Removal' },
             { value: 'emoji_handling', label: 'Emoji Handling' },
             { value: 'contraction_expansion', label: 'Contraction Expansion' }
+        ],
+        pos_tagging: [
+            { value: 'nltk', label: 'NLTK Perceptron POS Tagger' },
+            { value: 'spacy', label: 'SpaCy Contextual POS Tagger' },
+            { value: 'lexicon', label: 'Rule-Based / Lexicon POS Tagger' }
         ]
     };
 
@@ -98,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (selectedTech === 'lemmatization') subTypeLabel.innerText = 'Select Lemmatization Method';
         else if (selectedTech === 'stopwords') subTypeLabel.innerText = 'Select Stop Word Method';
         else if (selectedTech === 'cleaning') subTypeLabel.innerText = 'Select Cleaning Operation';
+        else if (selectedTech === 'pos_tagging') subTypeLabel.innerText = 'Select Tagger Engine';
         else subTypeLabel.innerText = 'Select Variant';
 
         subTypeSelect.innerHTML = '';
