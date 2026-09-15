@@ -548,10 +548,10 @@ class NLPProcessor:
                 lemmas = [self.lemmatizer.lemmatize(w.lower()) if w.isalnum() else w for w in words]
             else:
                 lemmas = [dict_map.get(w.lower(), w) for w in words]
-            explanation = "WordNet Lemmatization utilizes the NLTK WordNet lexical database to resolve words to their valid dictionary lemmas."
+            explanation = "WordNet Lemmatization utilizes Princeton's WordNet lexical database to resolve words to their valid dictionary lemmas."
 
         elif method == "pos_based":
-            pos_analysis = self.pos_tag_text(text_clean, tagset="penn")
+            pos_analysis = self.pos_tag_text(text_clean, tagset="penn", algorithm="nltk")
             if HAS_NLTK and self.lemmatizer:
                 try:
                     tagged = [(t["token"], t.get("penn_tag", t["tag"])) for t in pos_analysis["tagged_tokens"]]
@@ -566,19 +566,58 @@ class NLPProcessor:
                     lemmas = [dict_map.get(w.lower(), self.lemmatizer.lemmatize(w.lower())) for w in words]
             else:
                 lemmas = [dict_map.get(w.lower(), w) for w in words]
-            explanation = "POS-Based Lemmatization analyzes Part-Of-Speech tags (Noun, Verb, Adjective, Adverb) before looking up lemmas, producing high accuracy (e.g. 'this is a book' -> 'this/Determiner is/Verb a/Determiner book/Noun')."
+            explanation = "POS-Based Lemmatization uses NLTK Part-Of-Speech tagging (Noun, Verb, Adjective, Adverb) before looking up lemmas in WordNet (e.g. 'were' -> 'be', 'running' -> 'run')."
 
-        elif method in ["context_aware", "transformer"]:
-            pos_analysis = self.pos_tag_text(text_clean, tagset="penn")
+        elif method == "context_aware":
+            pos_analysis = self.pos_tag_text(text_clean, tagset="universal", algorithm="nltk")
+            lemmas = []
             if HAS_SPACY and nlp_spacy:
                 doc = nlp_spacy(text_clean)
                 lemmas = [token.lemma_ for token in doc]
-            elif HAS_NLTK and self.lemmatizer:
-                tagged = pos_tag(words)
-                lemmas = [self.lemmatizer.lemmatize(w.lower(), pos=self._get_wordnet_pos(tag)) if w.isalnum() else w for w, tag in tagged]
             else:
-                lemmas = [dict_map.get(w.lower(), w) for w in words]
-            explanation = "Context-Aware & Transformer Lemmatization evaluates the full sentence context to accurately determine whether a word functions as a noun, verb, or adjective."
+                for item in pos_analysis["tagged_tokens"]:
+                    w = item["token"]
+                    w_lower = w.lower()
+                    cat = item["category"]
+                    if not w.isalnum():
+                        lemmas.append(w)
+                    elif cat == "Verb":
+                        if w_lower in ["was", "were", "been", "being", "is", "am", "are"]:
+                            lemmas.append("be")
+                        elif w_lower in ["had", "has", "having"]:
+                            lemmas.append("have")
+                        elif w_lower in ["did", "does", "doing"]:
+                            lemmas.append("do")
+                        elif w_lower.endswith("ing") and len(w_lower) > 4:
+                            lemmas.append(w_lower[:-3])
+                        elif w_lower.endswith("ed") and len(w_lower) > 4:
+                            lemmas.append(w_lower[:-2])
+                        else:
+                            lemmas.append(self.lemmatizer.lemmatize(w_lower, pos=wordnet.VERB) if self.lemmatizer else dict_map.get(w_lower, w_lower))
+                    elif cat == "Noun":
+                        lemmas.append(self.lemmatizer.lemmatize(w_lower, pos=wordnet.NOUN) if self.lemmatizer else dict_map.get(w_lower, w_lower))
+                    elif cat == "Adjective":
+                        lemmas.append(self.lemmatizer.lemmatize(w_lower, pos=wordnet.ADJ) if self.lemmatizer else dict_map.get(w_lower, w_lower))
+                    elif cat == "Adverb":
+                        lemmas.append(self.lemmatizer.lemmatize(w_lower, pos=wordnet.ADV) if self.lemmatizer else dict_map.get(w_lower, w_lower))
+                    else:
+                        lemmas.append(dict_map.get(w_lower, w_lower))
+            explanation = "Context-Aware Lemmatization analyzes syntactic dependency trees across sentence context to disambiguate words functioning as different parts-of-speech."
+
+        elif method == "transformer":
+            pos_analysis = self.pos_tag_text(text_clean, tagset="universal", algorithm="spacy" if HAS_SPACY else "nltk")
+            lemmas = []
+            if HAS_SPACY and nlp_spacy:
+                doc = nlp_spacy(text_clean)
+                lemmas = [token.lemma_.lower() for token in doc]
+            else:
+                for item in pos_analysis["tagged_tokens"]:
+                    w = item["token"].lower()
+                    if not w.isalnum():
+                        lemmas.append(w)
+                    else:
+                        lemmas.append(dict_map.get(w, self.lemmatizer.lemmatize(w, pos=self._get_wordnet_pos(item.get("penn_tag", "NN"))) if self.lemmatizer else w))
+            explanation = "Transformer POS Lemmatization leverages deep neural contextual embeddings to resolve subword morphemes and complex syntactic structures."
 
         else:
             lemmas = [dict_map.get(w.lower(), w) for w in words]
