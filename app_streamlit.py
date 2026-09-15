@@ -120,11 +120,9 @@ elif nav_choice == "🧪 NLP Workbench Lab":
         elif technique == "Stemming":
             option = st.selectbox("Algorithm:", ["porter", "snowball", "lancaster", "rule_based", "lovins"])
         elif technique == "Lemmatization":
-            option = st.selectbox("Algorithm:", ["wordnet", "pos_aware", "spacy", "context_aware", "custom_dict"])
+            option = st.selectbox("Algorithm:", ["wordnet", "pos_based", "context_aware", "dictionary", "rule_based"])
         elif technique == "Stop Word Removal":
             option = st.selectbox("Algorithm:", ["standard", "aggressive", "domain_nlp", "frequency", "custom"])
-        elif technique == "POS Tagging":
-            option = st.selectbox("Algorithm:", ["nltk", "spacy", "lexicon"])
         else:
             option = st.selectbox("Algorithm:", ["full_pipeline", "lowercase", "remove_urls", "remove_html", "remove_numbers", "remove_punctuation"])
 
@@ -142,10 +140,6 @@ elif nav_choice == "🧪 NLP Workbench Lab":
         elif technique == "Stop Word Removal":
             res = nlp_engine.remove_stopwords(user_input, method=option)
             st.success(res.get('processed_text', ''))
-        elif technique == "POS Tagging":
-            res = nlp_engine.pos_tag_text(user_input, algorithm=option)
-            st.success("POS Tagged Tokens:")
-            st.write(res.get('tagged_tokens', []))
         elif technique == "Text Cleaning":
             res = nlp_engine.clean_text(user_input, method=option)
             st.success(res.get('processed_text', ''))
@@ -155,17 +149,17 @@ elif nav_choice == "🧪 NLP Workbench Lab":
 # ----------------------------------------------------
 elif nav_choice == "⚔️ Algorithm Battle Arena":
     st.header("⚔️ Side-by-Side Algorithm Battle Arena")
-    battle_text = st.text_input("Enter text to compare algorithms:", "this is a book")
+    battle_text = st.text_input("Enter text to compare algorithms:", "this is a book. The children were running fast!")
     
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader("NLTK POS Tagging")
-        st.code(nlp_engine.pos_tag_text(battle_text, algorithm='nltk').get('processed_text', ''))
-        st.caption("Averaged Perceptron Tagger for Penn Treebank POS categories.")
+        st.subheader("WordNet Lemmatization")
+        st.code(nlp_engine.lemmatize(battle_text, method='wordnet').get('processed_text', ''))
+        st.caption("Standard NLTK WordNet dictionary lookup.")
     with col2:
-        st.subheader("Rule-Based / Lexicon POS Tagging")
-        st.code(nlp_engine.pos_tag_text(battle_text, algorithm='lexicon').get('processed_text', ''))
-        st.caption("Pattern rule & dictionary lookup based tagger.")
+        st.subheader("POS-Based Lemmatization")
+        st.code(nlp_engine.lemmatize(battle_text, method='pos_based').get('processed_text', ''))
+        st.caption("Morphological POS tagging tagger ('were' -> 'be', 'running' -> 'run').")
 
 # ----------------------------------------------------
 # VIEW 4: REFERENCE
@@ -175,9 +169,8 @@ elif nav_choice == "📚 Technique Reference":
     df = pd.DataFrame([
         {"Technique": "Tokenization", "Algorithms": "11 (Word, WordPiece, BPE, N-Gram, Regex...)", "Purpose": "Splits text into atomic language units."},
         {"Technique": "Stemming", "Algorithms": "5 (Porter, Snowball, Lancaster, Lovins...)", "Purpose": "Strips word suffixes to base crude roots."},
-        {"Technique": "Lemmatization", "Algorithms": "6 (WordNet, POS-Aware, SpaCy...)", "Purpose": "Maps inflected words to valid dictionary lemmas."},
+        {"Technique": "Lemmatization", "Algorithms": "5 (WordNet, POS-Based, Context-Aware, Dict, Rule)", "Purpose": "Maps inflected words to valid dictionary lemmas."},
         {"Technique": "Stopwords Removal", "Algorithms": "5 (Standard, Aggressive, Frequency...)", "Purpose": "Filters non-informative structural words."},
-        {"Technique": "POS Tagging", "Algorithms": "3 (NLTK Perceptron, SpaCy, Lexicon Rule-based...)", "Purpose": "Categorizes words by syntax (Determiner, Verb, Noun...)"},
         {"Technique": "Text Cleaning", "Algorithms": "10 (Lowercase, URL, HTML, Emojis...)", "Purpose": "Strips noise before feature extraction."}
     ])
     st.table(df)

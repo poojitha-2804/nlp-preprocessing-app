@@ -60,11 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         lemmatization: [
             { value: 'wordnet', label: 'WordNet Lemmatization' },
-            { value: 'dictionary', label: 'Dictionary-Based Lemmatization' },
-            { value: 'rule_based', label: 'Rule-Based Lemmatization' },
             { value: 'pos_based', label: 'POS-Based Lemmatization' },
             { value: 'context_aware', label: 'Context-Aware Lemmatization' },
-            { value: 'transformer', label: 'Transformer/Contextual Lemmatization' }
+            { value: 'dictionary', label: 'Dictionary-Based Lemmatization' },
+            { value: 'rule_based', label: 'Rule-Based Lemmatization' }
         ],
         stopwords: [
             { value: 'standard', label: 'Standard English Stop Words' },
