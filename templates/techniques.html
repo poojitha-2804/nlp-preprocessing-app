@@ -6,9 +6,9 @@
 <section class="py-5">
     <div class="container">
         <div class="text-center max-width-700 mx-auto mb-5">
-            <span class="badge badge-technique mb-2">Comprehensive Guide</span>
+            <span class="badge badge-technique mb-2">Comprehensive Catalog</span>
             <h1 class="hero-heading fs-2 text-white">NLP Preprocessing Techniques</h1>
-            <p class="section-subtitle">Explore the complete catalog of text transformation algorithms and methodology.</p>
+            <p class="section-subtitle">Explore the complete catalog of text transformation algorithms, syntactic analysis, and normalization methodologies.</p>
         </div>
 
         <div class="row g-4">
@@ -81,29 +81,56 @@
                         <span class="badge badge-technique"><i class="fas fa-book me-1"></i> 5 Methods</span>
                         <a href="{{ url_for('lemmatization') }}" class="btn btn-outline-custom btn-sm">Deep Dive Page &rarr;</a>
                     </div>
-                    <h3 class="fw-bold text-white mb-2">Lemmatization &amp; POS Tagging</h3>
+                    <h3 class="fw-bold text-white mb-2">Lemmatization</h3>
                     <p class="text-secondary small mb-3">
-                        Uses vocabulary dictionaries and Part-of-Speech (POS) syntactic analysis to return valid, dictionary canonical base words (lemmas).
+                        Uses vocabulary dictionaries and morphological context to resolve canonical base headwords (lemmas).
                     </p>
                     <div class="mb-3">
                         <strong class="text-white small d-block mb-2">Supported Approaches:</strong>
                         <div class="d-flex flex-wrap gap-1">
-                            <span class="badge badge-technique">POS-Based Lemmatization</span>
-                            <span class="badge badge-variant">WordNet</span>
-                            <span class="badge badge-variant">Context-Aware / Transformer POS</span>
+                            <span class="badge badge-technique">WordNet Standard</span>
+                            <span class="badge badge-variant">POS-Based Lemmatization</span>
+                            <span class="badge badge-variant">Context-Aware Syntax</span>
                             <span class="badge badge-variant">Dictionary-Based</span>
                             <span class="badge badge-variant">Rule-Based</span>
                         </div>
                     </div>
                     <div class="code-output small text-muted">
-                        Input: "this is a book"<br>
-                        POS Tags: ["this/DT", "is/VBZ", "a/DT", "book/NN"]<br>
-                        Output: ["this", "be", "a", "book"]
+                        Input: "the 3 children were running fast"<br>
+                        Output: ["the", "3", "child", "be", "run", "fast"]
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Stop Word Removal Card -->
+            <!-- 4. Part-of-Speech Tagging Card -->
+            <div class="col-lg-6">
+                <div class="glass-card h-100 p-4 border border-indigo">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge badge-technique"><i class="fas fa-tags me-1"></i> 3 Engines &bull; 2 Tagsets</span>
+                        <a href="{{ url_for('pos_tagging') }}" class="btn btn-outline-custom btn-sm">Deep Dive Page &rarr;</a>
+                    </div>
+                    <h3 class="fw-bold text-white mb-2">Part-of-Speech (POS) Tagging</h3>
+                    <p class="text-secondary small mb-3">
+                        Assigns grammatical categories (Noun, Verb, Adjective, Adverb, Preposition) to words using contextual sequence taggers.
+                    </p>
+                    <div class="mb-3">
+                        <strong class="text-white small d-block mb-2">Supported Tagsets &amp; Engines:</strong>
+                        <div class="d-flex flex-wrap gap-1">
+                            <span class="badge badge-technique">Penn Treebank (36 Tags)</span>
+                            <span class="badge badge-technique">Universal POS (17 Categories)</span>
+                            <span class="badge badge-variant">NLTK Perceptron</span>
+                            <span class="badge badge-variant">SpaCy Contextual</span>
+                            <span class="badge badge-variant">Lexicon Tagger</span>
+                        </div>
+                    </div>
+                    <div class="code-output small text-muted">
+                        Input: "Natural Language Processing is amazing."<br>
+                        Output: "Natural/JJ language/NN processing/NN is/VBZ amazing/JJ ./."
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Stop Word Removal Card -->
             <div class="col-lg-6">
                 <div class="glass-card h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -131,9 +158,9 @@
                 </div>
             </div>
 
-            <!-- 5. Text Cleaning & Normalization -->
-            <div class="col-12">
-                <div class="glass-card p-4">
+            <!-- 6. Text Cleaning & Normalization -->
+            <div class="col-lg-6">
+                <div class="glass-card h-100 p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <span class="badge badge-technique"><i class="fas fa-broom me-1"></i> 10 Operations</span>
                         <a href="{{ url_for('cleaning') }}" class="btn btn-outline-custom btn-sm">Deep Dive Page &rarr;</a>
@@ -143,14 +170,10 @@
                         Pipeline cleaning removes unwanted characters, URLs, HTML tags, emojis, and normalizes casing or contractions.
                     </p>
                     <div class="row g-2 mb-3">
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Lowercasing / Uppercasing</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Punctuation Removal</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Number Removal</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Special Character Removal</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Extra Whitespace Removal</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">HTML Tag Removal</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">URL Removal</span></div>
-                        <div class="col-md-3"><span class="badge badge-variant w-100">Contraction Expansion</span></div>
+                        <div class="col-md-6"><span class="badge badge-variant w-100">Lowercasing / Punctuation</span></div>
+                        <div class="col-md-6"><span class="badge badge-variant w-100">HTML / URL Strip</span></div>
+                        <div class="col-md-6"><span class="badge badge-variant w-100">Contractions / Emojis</span></div>
+                        <div class="col-md-6"><span class="badge badge-variant w-100">Whitespace Normalization</span></div>
                     </div>
                     <div class="code-output small text-muted">
                         Input: "Hello!!! Visit https://example.com 😊 &lt;p&gt;Text&lt;/p&gt;"<br>

@@ -534,7 +534,9 @@ class NLPProcessor:
             "went": "go", "gone": "go", "going": "go", "goes": "go"
         }
 
-        pos_analysis = None
+        # Compute full sequence POS analysis for all lemmatization methods (non-unique tokens sequence)
+        pos_analysis = self.pos_tag_text(text_clean, tagset="penn", algorithm="nltk")
+
         if method == "dictionary":
             lemmas = [dict_map.get(w.lower(), w.lower() if w.isalnum() else w) for w in words]
             explanation = "Dictionary-Based Lemmatization checks words against a predefined lookup dictionary of canonical lemma forms."
@@ -551,7 +553,6 @@ class NLPProcessor:
             explanation = "WordNet Lemmatization utilizes Princeton's WordNet lexical database to resolve words to their valid dictionary lemmas."
 
         elif method == "pos_based":
-            pos_analysis = self.pos_tag_text(text_clean, tagset="penn", algorithm="nltk")
             if HAS_NLTK and self.lemmatizer:
                 try:
                     tagged = [(t["token"], t.get("penn_tag", t["tag"])) for t in pos_analysis["tagged_tokens"]]
@@ -569,7 +570,6 @@ class NLPProcessor:
             explanation = "POS-Based Lemmatization uses NLTK Part-Of-Speech tagging (Noun, Verb, Adjective, Adverb) before looking up lemmas in WordNet (e.g. 'were' -> 'be', 'running' -> 'run')."
 
         elif method == "context_aware":
-            pos_analysis = self.pos_tag_text(text_clean, tagset="universal", algorithm="nltk")
             lemmas = []
             if HAS_SPACY and nlp_spacy:
                 doc = nlp_spacy(text_clean)
@@ -605,7 +605,6 @@ class NLPProcessor:
             explanation = "Context-Aware Lemmatization analyzes syntactic dependency trees across sentence context to disambiguate words functioning as different parts-of-speech."
 
         elif method == "transformer":
-            pos_analysis = self.pos_tag_text(text_clean, tagset="universal", algorithm="spacy" if HAS_SPACY else "nltk")
             lemmas = []
             if HAS_SPACY and nlp_spacy:
                 doc = nlp_spacy(text_clean)
@@ -625,8 +624,8 @@ class NLPProcessor:
 
         processed_text = " ".join(lemmas)
         res = self._build_result(text, lemmas, "Lemmatization", method, explanation, start_time, processed_text=processed_text)
-        if pos_analysis:
-            res["pos_analysis"] = pos_analysis
+        res["pos_analysis"] = pos_analysis
+        res["tagged_tokens"] = pos_analysis.get("tagged_tokens", [])
         return res
 
     def _rule_lemma(self, word):
@@ -1031,15 +1030,27 @@ class NLPProcessor:
         orig_words = re.findall(r'\w+', original_text)
         orig_sentences = [s for s in re.split(r'[.!?]+', original_text) if s.strip()]
         
+        # Extract raw token strings if tokens is a list of objects/dicts
+        raw_token_strings = []
+        if isinstance(tokens, list):
+            for t in tokens:
+                if isinstance(t, dict) and "token" in t:
+                    raw_token_strings.append(str(t["token"]))
+                else:
+                    raw_token_strings.append(str(t))
+
         if processed_text is None:
             if isinstance(tokens, list):
-                processed_text = " ".join([str(t) for t in tokens])
+                if len(tokens) > 0 and isinstance(tokens[0], dict) and "token" in tokens[0] and "tag" in tokens[0]:
+                    processed_text = " ".join([f"{t['token']}/{t['tag']}" for t in tokens])
+                else:
+                    processed_text = " ".join(raw_token_strings)
             else:
                 processed_text = str(tokens)
 
         # Word-only token filtering for accurate comparison
         orig_words_only = [w for w in re.findall(r'\w+', original_text)]
-        proc_words_only = [str(t) for t in tokens if str(t).isalnum()] if isinstance(tokens, list) else [w for w in re.findall(r'\w+', str(processed_text))]
+        proc_words_only = [w for w in raw_token_strings if w.isalnum()] if isinstance(tokens, list) else [w for w in re.findall(r'\w+', str(processed_text))]
 
         # Token Frequency Analysis
         freq_counter = Counter([w.lower() for w in proc_words_only])
@@ -1085,6 +1096,7 @@ class NLPProcessor:
                 "execution_time_ms": elapsed_ms
             }
         }
+
 
     def _generate_python_code(self, technique, sub_type):
         tech_lower = technique.lower()

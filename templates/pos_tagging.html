@@ -1,0 +1,212 @@
+{% extends 'layout.html' %}
+
+{% block title %}Part-of-Speech (POS) Tagging | NLP Preprocess{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <!-- Header -->
+        <div class="text-center max-width-700 mx-auto mb-5">
+            <span class="badge badge-technique mb-2"><i class="fas fa-tags me-1"></i> Syntactic Analysis</span>
+            <h1 class="hero-heading fs-2 text-white">Part-of-Speech (POS) Tagging</h1>
+            <p class="section-subtitle">
+                Part-of-Speech tagging assigns grammatical categories (Noun, Verb, Adjective, Adverb, Preposition, etc.) to every token based on context and syntax.
+            </p>
+        </div>
+
+        <!-- Interactive POS Tagging Sandbox -->
+        <div class="glass-card mb-5 p-4 border-indigo">
+            <h4 class="fw-bold text-white mb-3"><i class="fas fa-flask me-2 text-indigo"></i>Interactive POS Tagging Laboratory</h4>
+            <div class="row g-3 mb-3">
+                <div class="col-lg-7">
+                    <label class="form-label text-secondary small fw-bold">Enter Text to Tag:</label>
+                    <textarea id="pos-input" class="form-control form-control-dark" rows="3">Natural Language Processing is a fascinating field of Artificial Intelligence. The 3 children were running fast!</textarea>
+                </div>
+                <div class="col-lg-5">
+                    <div class="row g-2 mb-2">
+                        <div class="col-6">
+                            <label class="form-label text-secondary small fw-bold">Tagger Engine:</label>
+                            <select id="pos-algo" class="form-select form-select-dark">
+                                <option value="nltk" selected>NLTK Perceptron</option>
+                                <option value="spacy">SpaCy Contextual</option>
+                                <option value="lexicon">Rule-Based Lexicon</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-secondary small fw-bold">Tagset Scheme:</label>
+                            <select id="pos-tagset" class="form-select form-select-dark">
+                                <option value="penn" selected>Penn Treebank (36)</option>
+                                <option value="universal">Universal POS (17)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="pos-run-btn" class="btn btn-primary-gradient w-100 py-2 fw-bold mt-2">
+                        <i class="fas fa-play me-2"></i> Run POS Tagger
+                    </button>
+                </div>
+            </div>
+
+            <!-- DYNAMIC POS BADGES VISUALIZER -->
+            <div id="pos-visualizer-container" class="mb-4">
+                <h6 class="text-white small fw-bold text-uppercase mb-2"><i class="fas fa-layer-group text-cyan me-2"></i>Interactive Syntactic Token Badges:</h6>
+                <div id="pos-badges-container" class="p-3 bg-dark rounded border border-secondary d-flex flex-wrap gap-2 min-height-80">
+                    <span class="text-muted small">Tagged word tokens will render here as interactive badges...</span>
+                </div>
+            </div>
+
+            <!-- Output Cards -->
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <div class="text-secondary small fw-bold mb-1">Formatted Tagged Text (Token/Tag Notation):</div>
+                    <div id="pos-output-text" class="code-output fs-6 text-success font-monospace">Click "Run POS Tagger" to test...</div>
+                </div>
+                <div class="col-md-5">
+                    <div class="text-secondary small fw-bold mb-1">POS Category Summary Breakdown:</div>
+                    <div id="pos-summary-container" class="code-output text-white small">Category stats will appear here...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POS Concepts & Tagsets Breakdown -->
+        <h3 class="fw-bold text-white mb-4"><i class="fas fa-book-open me-2 text-indigo"></i>POS Tagging Frameworks &amp; Tagsets</h3>
+
+        <div class="row g-4">
+            <!-- 1. Penn Treebank Tagset -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4 border border-primary">
+                    <span class="badge badge-technique mb-2">Tagset 1</span>
+                    <h5 class="fw-bold text-white">Penn Treebank Tagset (36 Tags)</h5>
+                    <p class="text-secondary small mb-3">
+                        The standard fine-grained POS annotation scheme used in NLP. Distinguishes singular/plural nouns (<code>NN</code>/<code>NNS</code>), proper nouns (<code>NNP</code>), verb tenses (<code>VB</code>, <code>VBD</code>, <code>VBG</code>, <code>VBZ</code>), determiners (<code>DT</code>), etc.
+                    </p>
+                    <div class="code-output small text-primary">
+                        Example: "The/DT children/NNS were/VBD running/VBG fast/RB ./."
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Universal POS Tagset -->
+            <div class="col-md-6">
+                <div class="glass-card h-100 p-4 border border-success">
+                    <span class="badge badge-variant mb-2">Tagset 2</span>
+                    <h5 class="fw-bold text-white">Universal POS Tagset (17 Categories)</h5>
+                    <p class="text-secondary small mb-3">
+                        A cross-linguistic coarse-grained tagset standardized by Universal Dependencies. Maps all fine-grained tags into 17 primary universal grammatical categories (<code>NOUN</code>, <code>VERB</code>, <code>ADJ</code>, <code>ADV</code>, <code>PRON</code>, <code>ADP</code>, etc.).
+                    </p>
+                    <div class="code-output small text-success">
+                        Example: "The/DET children/NOUN were/AUX running/VERB fast/ADV ./PUNCT"
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. NLTK Averaged Perceptron Tagger -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-technique mb-2">Engine 1</span>
+                    <h5 class="fw-bold text-white">NLTK Perceptron Tagger</h5>
+                    <p class="text-secondary small mb-2">
+                        Uses a sequence-labeling Averaged Perceptron model trained on the Wall Street Journal corpus. Highly accurate and fast for English text.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. SpaCy Contextual Tagger -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-technique mb-2">Engine 2</span>
+                    <h5 class="fw-bold text-white">SpaCy Contextual Tagger</h5>
+                    <p class="text-secondary small mb-2">
+                        Uses deep neural convolutional network embeddings and transition-based dependency parsing for context-aware part-of-speech tagging.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. Rule-Based Lexicon Tagger -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 p-4">
+                    <span class="badge badge-technique mb-2">Engine 3</span>
+                    <h5 class="fw-bold text-white">Rule-Based / Lexicon Tagger</h5>
+                    <p class="text-secondary small mb-2">
+                        Uses explicit closed-class dictionaries (determiners, prepositions, pronouns, conjunctions) combined with suffix heuristics for lightweight execution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('pos-run-btn');
+    const input = document.getElementById('pos-input');
+    const algoSelect = document.getElementById('pos-algo');
+    const tagsetSelect = document.getElementById('pos-tagset');
+    const badgesContainer = document.getElementById('pos-badges-container');
+    const outputText = document.getElementById('pos-output-text');
+    const summaryContainer = document.getElementById('pos-summary-container');
+
+    function runPosTagger() {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Tagging...';
+
+        fetch('/api/pos-tag', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                text: input.value,
+                algorithm: algoSelect.value,
+                tagset: tagsetSelect.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play me-2"></i> Run POS Tagger';
+
+            if (data.success && data.tagged_tokens) {
+                // Render Formatted Text
+                outputText.innerText = data.processed || '';
+
+                // Render Interactive Badges
+                badgesContainer.innerHTML = '';
+                data.tagged_tokens.forEach(item => {
+                    const badge = document.createElement('div');
+                    badge.className = 'd-inline-flex flex-column align-items-center p-2 rounded bg-black border border-secondary shadow-sm';
+                    badge.style.minWidth = '75px';
+                    badge.title = `${item.desc || item.category}`;
+                    badge.innerHTML = `
+                        <span class="badge ${item.badge || 'bg-primary'} mb-1" style="font-size: 0.7rem; background-color: ${item.color || ''} !important;">
+                            ${item.tag} &bull; ${item.category}
+                        </span>
+                        <span class="fs-6 fw-bold text-white">${item.token}</span>
+                    `;
+                    badgesContainer.appendChild(badge);
+                });
+
+                // Render Tag Summary
+                if (data.tag_summary) {
+                    summaryContainer.innerHTML = Object.entries(data.tag_summary).map(([cat, count]) => `
+                        <div class="d-flex justify-content-between align-items-center py-1 border-bottom border-secondary">
+                            <span>${cat}:</span>
+                            <span class="badge badge-technique">${count} tokens</span>
+                        </div>
+                    `).join('');
+                }
+            } else {
+                outputText.innerText = data.error || 'Failed to tag text.';
+            }
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play me-2"></i> Run POS Tagger';
+            outputText.innerText = `Error: ${err.message}`;
+        });
+    }
+
+    btn.addEventListener('click', runPosTagger);
+    runPosTagger();
+});
+</script>
+{% endblock %}

@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCustomOptions();
     }
 
-    // Render extra controls based on sub-type (e.g. custom stopwords input or checkboxes)
+    // Render extra controls based on sub-type (e.g. custom stopwords input, POS tagset select, or checkboxes)
     function renderCustomOptions() {
         const selectedTech = mainTechniqueSelect.value;
         const subType = subTypeSelect.value;
@@ -168,6 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input type="number" id="ngram-n-input" class="form-control form-control-dark" value="2" min="1" max="5">
                 </div>
             `;
+        } else if (selectedTech === 'pos_tagging') {
+            customOptionsContainer.innerHTML = `
+                <div class="mt-3">
+                    <label class="form-label text-secondary small font-weight-bold">Select Tagset Scheme:</label>
+                    <select id="pos-tagset-select" class="form-select form-select-dark">
+                        <option value="penn" selected>Penn Treebank Tagset (36 fine-grained tags)</option>
+                        <option value="universal">Universal POS Tagset (17 coarse categories)</option>
+                    </select>
+                </div>
+            `;
         } else if (selectedTech === 'cleaning' && subType === 'all') {
             customOptionsContainer.innerHTML = `
                 <div class="mt-3">
@@ -210,6 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
     mainTechniqueSelect.addEventListener('change', updateSubTypeDropdown);
     subTypeSelect.addEventListener('change', renderCustomOptions);
 
+    // Parse URL query parameter (e.g. ?technique=pos_tagging)
+    const urlParams = new URLSearchParams(window.location.search);
+    const techParam = urlParams.get('technique');
+    if (techParam && mainTechniqueSelect.querySelector(`option[value="${techParam}"]`)) {
+        mainTechniqueSelect.value = techParam;
+    }
+
     // Initial setup
     updateSubTypeDropdown();
 
@@ -236,6 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
             options.pattern = document.getElementById('regex-pattern-input')?.value || '\\b\\w+\\b';
         } else if (technique === 'tokenization' && subType === 'ngram') {
             options.n = parseInt(document.getElementById('ngram-n-input')?.value || '2');
+        } else if (technique === 'pos_tagging') {
+            options.tagset = document.getElementById('pos-tagset-select')?.value || 'penn';
         } else if (technique === 'cleaning') {
             if (subType === 'all') {
                 const checkboxes = document.querySelectorAll('input[name="clean_op"]:checked');
@@ -270,7 +289,10 @@ document.addEventListener('DOMContentLoaded', () => {
             resultSection.style.display = 'block';
             originalTextDisplay.innerText = data.original;
 
-            if (Array.isArray(data.output)) {
+            // Formatted Processed Output
+            if (data.tagged_tokens || (Array.isArray(data.output) && data.output[0] && typeof data.output[0] === 'object' && data.output[0].token)) {
+                processedOutputDisplay.innerText = data.processed || data.output.map(t => `${t.token}/${t.tag}`).join(' ');
+            } else if (Array.isArray(data.output)) {
                 processedOutputDisplay.innerText = JSON.stringify(data.output, null, 2);
             } else {
                 processedOutputDisplay.innerText = data.processed || data.output;
@@ -279,6 +301,25 @@ document.addEventListener('DOMContentLoaded', () => {
             // Explanation & Title
             techNameDisplay.innerText = `${data.technique} (${data.sub_type.replace(/_/g, ' ')})`;
             explanationDisplay.innerText = data.explanation;
+
+            // Render POS Tag Visual Badges Container if POS Tagging or Lemmatization active
+            const posContainer = document.getElementById('pos-visual-container');
+            const posContent = document.getElementById('pos-badges-content');
+            const taggedTokens = data.tagged_tokens || (data.pos_analysis && data.pos_analysis.tagged_tokens) || (Array.isArray(data.output) && data.output[0] && data.output[0].token ? data.output : null);
+
+            if (posContainer && posContent && taggedTokens && taggedTokens.length > 0) {
+                posContainer.style.display = 'block';
+                posContent.innerHTML = taggedTokens.map(item => `
+                    <div class="d-inline-flex flex-column align-items-center p-2 rounded bg-black border border-secondary shadow-sm" style="min-width: 75px;" title="${item.desc || item.category}">
+                        <span class="badge ${item.badge || 'bg-primary'} mb-1" style="font-size: 0.7rem; background-color: ${item.color || ''} !important;">
+                            ${item.tag} &bull; ${item.category}
+                        </span>
+                        <span class="fs-6 fw-bold text-white">${item.token}</span>
+                    </div>
+                `).join('');
+            } else if (posContainer) {
+                posContainer.style.display = 'none';
+            }
 
             // Render Python Code Snippet
             const pyDisplay = document.getElementById('python-code-display');
@@ -362,7 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (Array.isArray(data.output)) {
-            diffContainer.innerHTML = data.output.map(token => `<span class="token-chip">${token}</span>`).join(' ');
+            diffContainer.innerHTML = data.output.map(token => {
+                if (typeof token === 'object' && token.token) {
+                    return `<span class="token-chip">${token.token} <small class="text-cyan">&lt;${token.tag}&gt;</small></span>`;
+                }
+                return `<span class="token-chip">${token}</span>`;
+            }).join(' ');
         } else {
             diffContainer.innerText = data.processed;
         }
@@ -421,7 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const tokens = window.latestOutputData.output;
-        let csvContent = "Index,Token\n" + tokens.map((t, idx) => `${idx + 1},"${String(t).replace(/"/g, '""')}"`).join("\n");
+        let csvContent = "Index,Token\n" + tokens.map((t, idx) => {
+            const val = typeof t === 'object' ? `${t.token} (${t.tag})` : String(t);
+            return `${idx + 1},"${val.replace(/"/g, '""')}"`;
+        }).join("\n");
         const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');

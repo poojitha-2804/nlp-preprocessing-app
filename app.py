@@ -39,7 +39,7 @@ def cleaning():
 @app.route('/pos-tagging')
 @app.route('/pos')
 def pos_tagging():
-    return redirect(url_for('lemmatization'))
+    return render_template('pos_tagging.html')
 
 @app.route('/workbench')
 def workbench():
