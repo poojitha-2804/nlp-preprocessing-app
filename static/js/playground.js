@@ -290,10 +290,30 @@ document.addEventListener('DOMContentLoaded', () => {
             originalTextDisplay.innerText = data.original;
 
             // Formatted Processed Output
-            if (data.tagged_tokens || (Array.isArray(data.output) && data.output[0] && typeof data.output[0] === 'object' && data.output[0].token)) {
-                processedOutputDisplay.innerText = data.processed || data.output.map(t => `${t.token}/${t.tag}`).join(' ');
+            const tagged = data.tagged_tokens || (data.pos_analysis && data.pos_analysis.tagged_tokens) || (Array.isArray(data.output) && data.output[0] && typeof data.output[0] === 'object' ? data.output : []);
+
+            if (technique === 'pos_tagging' || data.technique === 'POS Tagging') {
+                if (tagged.length > 0) {
+                    processedOutputDisplay.innerText = tagged.map(t => `${t.token}/${t.tag} (${t.category})`).join('  ');
+                } else {
+                    processedOutputDisplay.innerText = data.processed || data.output;
+                }
+            } else if (technique === 'lemmatization' || data.technique === 'Lemmatization') {
+                if (Array.isArray(data.output)) {
+                    processedOutputDisplay.innerText = data.output.map((lemma, idx) => {
+                        const posItem = tagged[idx] || {};
+                        const cat = posItem.category || '';
+                        return cat ? `${lemma} (${cat})` : lemma;
+                    }).join('  ');
+                } else {
+                    processedOutputDisplay.innerText = data.processed || data.output;
+                }
             } else if (Array.isArray(data.output)) {
-                processedOutputDisplay.innerText = JSON.stringify(data.output, null, 2);
+                if (data.output[0] && typeof data.output[0] === 'object' && data.output[0].token) {
+                    processedOutputDisplay.innerText = data.output.map(t => `${t.token}/${t.tag} (${t.category || ''})`).join('  ');
+                } else {
+                    processedOutputDisplay.innerText = data.output.join('  ');
+                }
             } else {
                 processedOutputDisplay.innerText = data.processed || data.output;
             }
@@ -392,11 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (Array.isArray(data.diff) && data.diff.length > 0) {
-            diffContainer.innerHTML = data.diff.map(item => {
+            const tagged = data.tagged_tokens || (data.pos_analysis && data.pos_analysis.tagged_tokens) || [];
+            diffContainer.innerHTML = data.diff.map((item, idx) => {
+                const posItem = tagged[idx] || {};
+                const cat = posItem.category ? `<small class="text-cyan ms-1">(${posItem.category})</small>` : '';
                 if (item.changed) {
-                    return `<span class="token-chip changed" title="Transformed">${item.original} &rarr; ${item.processed}</span>`;
+                    return `<span class="token-chip changed" title="Transformed">${item.original} &rarr; ${item.processed} ${cat}</span>`;
                 } else {
-                    return `<span class="token-chip">${item.original}</span>`;
+                    return `<span class="token-chip">${item.original} ${cat}</span>`;
                 }
             }).join(' ');
             return;
@@ -405,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Array.isArray(data.output)) {
             diffContainer.innerHTML = data.output.map(token => {
                 if (typeof token === 'object' && token.token) {
-                    return `<span class="token-chip">${token.token} <small class="text-cyan">&lt;${token.tag}&gt;</small></span>`;
+                    return `<span class="token-chip">${token.token} <small class="text-cyan">(${token.category || token.tag})</small></span>`;
                 }
                 return `<span class="token-chip">${token}</span>`;
             }).join(' ');
