@@ -9,12 +9,7 @@ app.config['SECRET_KEY'] = 'nlp_preprocess_secret_key_2026'
 # PAGE ROUTES
 # ----------------------------------------------------
 @app.route('/')
-@app.route('/bhashabandhu')
 def index():
-    return render_template('bhashabandhu.html')
-
-@app.route('/nlp-preprocess')
-def nlp_preprocess():
     return render_template('index.html')
 
 @app.route('/techniques')
@@ -49,6 +44,10 @@ def pos_tagging():
 @app.route('/workbench')
 def workbench():
     return render_template('playground.html')
+
+@app.route('/pipeline')
+def pipeline():
+    return render_template('pipeline.html')
 
 @app.route('/explore')
 def explore():
@@ -170,7 +169,7 @@ def api_process():
 # Error Handlers
 @app.errorhandler(404)
 def not_found_error(error):
-    return render_template('bhashabandhu.html'), 404
+    return render_template('index.html'), 404
 
 @app.errorhandler(500)
 def internal_error(error):

@@ -1,81 +1,310 @@
 {% extends 'layout.html' %}
 
-{% block title %}About NLP Preprocess | Educational Platform{% endblock %}
+{% block title %}About | SVCET NLP Preprocessing Educational Platform{% endblock %}
 
 {% block content %}
-<section class="py-5">
+<section class="py-5" style="background: linear-gradient(180deg, #f0f8f1 0%, #ffffff 280px);">
     <div class="container">
-        <!-- Header -->
-        <div class="text-center max-width-700 mx-auto mb-5">
-            <span class="badge badge-technique mb-2"><i class="fas fa-university me-1"></i> Educational Mission</span>
-            <h1 class="hero-heading fs-2 text-white">About NLP Preprocess</h1>
-            <p class="section-subtitle">Empowering students, researchers, and developers to intuitively understand natural language processing pipelines.</p>
+        
+        <!-- ==========================================
+             1. HERO HEADER
+             ========================================== -->
+        <div class="text-center max-width-800 mx-auto mb-5">
+            <span class="badge badge-technique mb-3 fs-6 px-3 py-2">
+                <i class="fas fa-university me-1 text-success"></i> Department of Computer Science &amp; Engineering (AI &amp; ML)
+            </span>
+            <h1 class="hero-heading fs-1 text-dark fw-bold mb-3">
+                About SVCET NLP Preprocess Platform
+            </h1>
+            <p class="section-subtitle fs-5 text-secondary mx-auto" style="max-width: 720px;">
+                An interactive educational &amp; research workbench engineered for students and researchers to master, visualize, and benchmark Natural Language Processing pipelines and vectorization models.
+            </p>
         </div>
 
-        <div class="row g-4">
-            <div class="col-lg-8 mx-auto">
-                <!-- Project Objective Card -->
-                <div class="glass-card p-4 mb-4">
-                    <h4 class="fw-bold text-white mb-3"><i class="fas fa-bullseye me-2 text-indigo"></i>Project Objective</h4>
-                    <p class="text-secondary">
-                        Natural Language Processing (NLP) starts with effective text preprocessing. Without clean, well-tokenized, and normalized data, downstream machine learning models (ranging from Naive Bayes classifiers to modern Transformer Large Language Models) struggle to extract meaningful patterns.
+        <!-- ==========================================
+             2. TOP ROW: MISSION & ACADEMIC INSTITUTION (2 Columns)
+             ========================================== -->
+        <div class="row g-4 mb-5">
+            <!-- Left: Mission & Purpose -->
+            <div class="col-lg-6">
+                <div class="glass-card h-100 p-4 border-2 shadow-sm" style="border-left: 5px solid #10B981 !important;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 52px; height: 52px; background: #e8f5e9; color: #1b5e20; font-size: 1.4rem;">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <span class="text-uppercase small fw-bold text-success font-monospace" style="letter-spacing: 0.8px;">Platform Mission</span>
+                            <h4 class="fw-bold text-dark mb-0">Project Objective</h4>
+                        </div>
+                    </div>
+                    <p class="text-secondary mb-3">
+                        Natural Language Processing starts with effective, structured text preprocessing. Without clean, normalized, and well-tokenized data, downstream neural networks and statistical language models struggle to extract meaningful semantic patterns.
                     </p>
                     <p class="text-secondary mb-0">
-                        This web platform provides a zero-setup, fully interactive visual laboratory where users can test sentences, compare preprocessing algorithms (such as Porter vs. Snowball stemmers or POS-based lemmatization), and analyze execution stats in real time.
+                        This web platform provides a zero-setup visual laboratory where students and researchers can experiment with 11 tokenization models, 5 stemming algorithms, morphological lemmatization, and Word2Vec (CBOW &amp; Skip-Gram) vector representations with real-time statistics.
                     </p>
                 </div>
+            </div>
 
-                <!-- Project Developers Card (White Card with Green Border) -->
-                <div class="card p-4 mb-4 rounded-4 shadow-sm" style="background-color: #FFFFFF; border: 2px solid #10B981;">
-                    <h4 class="fw-bold mb-3" style="color: #0D3B11;"><i class="fas fa-user-graduate me-2 text-success"></i>Project Developers</h4>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="p-3 rounded-3 h-100" style="background-color: #F4FBF7; border: 2px solid #10B981;">
-                                <p class="mb-1"><strong class="fs-5" style="color: #0D3B11;">V. Poojitha</strong></p>
-                                <p class="fw-bold small mb-1" style="color: #059669;">Department of Computer Science &amp; Engineering (AI &amp; ML)</p>
-                                <p class="small mb-0 text-muted">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
-                            </div>
+            <!-- Right: Academic Department & College -->
+            <div class="col-lg-6">
+                <div class="glass-card h-100 p-4 border-2 shadow-sm" style="border-left: 5px solid #059669 !important;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 52px; height: 52px; background: #e8f5e9; color: #1b5e20; font-size: 1.4rem;">
+                            <i class="fas fa-university"></i>
                         </div>
-                        <div class="col-md-6">
-                            <div class="p-3 rounded-3 h-100" style="background-color: #F4FBF7; border: 2px solid #10B981;">
-                                <p class="mb-1"><strong class="fs-5" style="color: #0D3B11;">R. Jai Sree Ram</strong></p>
-                                <p class="fw-bold small mb-1" style="color: #059669;">Department of Computer Science &amp; Engineering (AI &amp; ML)</p>
-                                <p class="small mb-0 text-muted">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
-                            </div>
+                        <div>
+                            <span class="text-uppercase small fw-bold text-success font-monospace" style="letter-spacing: 0.8px;">Academic Affiliation</span>
+                            <h4 class="fw-bold text-dark mb-0">Institution &amp; Department</h4>
                         </div>
                     </div>
-                </div>
-
-                <!-- Project Mentor & Guide Card (White Card with Green Border) -->
-                <div class="card p-4 mb-4 rounded-4 shadow-sm" style="background-color: #FFFFFF; border: 2px solid #10B981;">
-                    <h4 class="fw-bold mb-3" style="color: #000000;"><i class="fas fa-chalkboard-teacher me-2 text-success"></i>Project Mentor &amp; Faculty Guide</h4>
-                    <div class="p-3 rounded-3" style="background-color: #F4FBF7; border: 2px solid #10B981;">
-                        <p class="mb-1"><strong class="fs-5" style="color: #000000;">K.ANJANEYULU, M.Tech (CSE), MBA (Finance)</strong></p>
-                        <p class="fw-bold small mb-1" style="color: #059669;">Assistant Professor, Dept. of CSM</p>
-                        <p class="small mb-0 text-muted">Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</p>
+                    <h5 class="fw-bold text-dark mb-1">
+                        Dept. of Computer Science &amp; Engineering (AI &amp; ML)
+                    </h5>
+                    <p class="small text-success fw-bold mb-2">
+                        Center for Natural Language Processing &amp; Artificial Intelligence
+                    </p>
+                    <p class="text-secondary small mb-3">
+                        <strong>Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor</strong>
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-light text-dark border">Autonomous Institution</span>
+                        <span class="badge bg-light text-dark border">AICTE Approved</span>
+                        <span class="badge bg-light text-dark border">Affiliated to JNTUA</span>
+                        <span class="badge bg-success-subtle text-success border border-success fw-bold">NAAC 'A' Grade</span>
+                        <span class="badge bg-success-subtle text-success border border-success fw-bold">NBA Accredited</span>
                     </div>
-                </div>
-
-                <!-- Tech Stack Card -->
-                <div class="glass-card p-4 mb-4">
-                    <h4 class="fw-bold text-white mb-3"><i class="fas fa-layer-group me-2 text-purple"></i>Architecture &amp; Tech Stack</h4>
-                    <ul class="list-unstyled text-secondary mb-0">
-                        <li class="mb-2"><strong class="text-white">Backend Engine:</strong> Python 3 + Flask Web Framework</li>
-                        <li class="mb-2"><strong class="text-white">NLP Libraries:</strong> NLTK (Natural Language Toolkit), spaCy, BeautifulSoup4, Regex</li>
-                        <li class="mb-2"><strong class="text-white">Frontend UI:</strong> HTML5, Vanilla CSS3 (Custom Dark Navy &amp; Indigo Glassmorphism Design System), Bootstrap 5</li>
-                        <li class="mb-0"><strong class="text-white">API Integration:</strong> Asynchronous AJAX REST endpoints with dynamic JSON response rendering</li>
-                    </ul>
-                </div>
-
-                <!-- Call to Action Card -->
-                <div class="glass-card p-4 text-center">
-                    <h5 class="fw-bold text-white mb-3">Ready to start experimenting?</h5>
-                    <a href="{{ url_for('workbench') }}" class="btn btn-primary-gradient px-4">
-                        <i class="fas fa-flask me-2"></i> Open NLP Workbench
-                    </a>
                 </div>
             </div>
         </div>
+
+        <!-- ==========================================
+             3. SECTION: LEADERSHIP & DEVELOPMENT TEAM
+             ========================================== -->
+        <div class="mb-5">
+            <div class="text-center mb-4">
+                <span class="badge badge-technique mb-2 fs-6 px-3 py-1">
+                    <i class="fas fa-users-cog me-1"></i> People Behind The Project
+                </span>
+                <h2 class="section-title text-dark fs-2 mb-1">Project Mentorship &amp; Developers</h2>
+                <p class="text-muted small">Academic guidance and student engineering team from the Department of CSE (AI &amp; ML)</p>
+            </div>
+
+            <!-- Mentor Card (Full Width Highlight) -->
+            <div class="glass-card p-4 mb-4 shadow-sm" style="background: linear-gradient(135deg, #ffffff 0%, #f4fbf7 100%); border: 2px solid #a3d4a6 !important;">
+                <div class="row align-items-center gy-3">
+                    <div class="col-md-auto text-center">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm" style="width: 80px; height: 80px; background: linear-gradient(135deg, #2e7d32, #1b5e20); color: #ffffff; font-size: 2rem;">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                            <h4 class="fw-bold text-dark mb-0">K. ANJANEYULU</h4>
+                            <span class="badge bg-success px-3 py-1 fs-6">
+                                <i class="fas fa-award me-1"></i> Faculty Mentor &amp; Project Guide
+                            </span>
+                        </div>
+                        <p class="text-dark fw-semibold small mb-1">
+                            M.Tech (CSE), MBA (Finance) &bull; <span class="text-success fw-bold">Assistant Professor</span>
+                        </p>
+                        <p class="small text-secondary mb-0">
+                            Department of Computer Science &amp; Engineering / CSM (AI &amp; ML) &bull; Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Developers Card -->
+            <div class="glass-card p-4 border border-2 border-success rounded-4 bg-white shadow-sm">
+                <!-- Lead Developer Banner -->
+                <div class="p-3 rounded-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #d8edd9 100%); border: 2px solid #10b981;">
+                    <div class="row align-items-center gy-3">
+                        <div class="col-auto">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 62px; height: 62px; background: linear-gradient(135deg, #10b981, #059669); font-size: 1.4rem;">
+                                VP
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <div>
+                                    <h4 class="fw-bold text-dark mb-0">
+                                        V. POOJITHA
+                                    </h4>
+                                    <p class="small text-success fw-bold mb-0">
+                                        Dept. of Computer Science &amp; Engineering (AI &amp; ML)
+                                    </p>
+                                    <p class="small text-muted mb-0" style="font-size: 0.8rem;">
+                                        Sri Venkateswara College of Engineering &amp; Technology (Autonomous), Chittoor
+                                    </p>
+                                </div>
+                                <div>
+                                    <span class="badge bg-success px-3 py-2 fs-6 shadow-sm">
+                                        <i class="fas fa-crown me-1 text-warning"></i> Project Lead &amp; Lead Developer
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Members Title -->
+                <h5 class="fw-bold text-dark mb-3">
+                    <i class="fas fa-user-friends text-success me-2"></i>Core Development Team Members:
+                </h5>
+
+                <!-- 3 Member Profile Cards Grid -->
+                <div class="row g-3">
+                    <!-- Member 1: R. Jai Sree Ram -->
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 h-100 bg-light border border-2 shadow-sm" style="border-color: #a3d4a6 !important;">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 48px; height: 48px; background: #2e7d32; font-size: 1.05rem;">
+                                    JR
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-0 fs-6">R. JAI SREE RAM</h6>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.75rem;">Team Member</span>
+                                </div>
+                            </div>
+                            <div class="small text-secondary fw-semibold mt-2">
+                                <i class="fas fa-graduation-cap text-success me-1"></i> Dept. of CSE (AI &amp; ML)
+                            </div>
+                            <div class="small text-muted" style="font-size: 0.8rem;">
+                                SVCET (Autonomous), Chittoor
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Member 2: T. Sujatha -->
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 h-100 bg-light border border-2 shadow-sm" style="border-color: #a3d4a6 !important;">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 48px; height: 48px; background: #2e7d32; font-size: 1.05rem;">
+                                    TS
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-0 fs-6">T. SUJATHA</h6>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.75rem;">Team Member</span>
+                                </div>
+                            </div>
+                            <div class="small text-secondary fw-semibold mt-2">
+                                <i class="fas fa-graduation-cap text-success me-1"></i> Dept. of CSE (AI &amp; ML)
+                            </div>
+                            <div class="small text-muted" style="font-size: 0.8rem;">
+                                SVCET (Autonomous), Chittoor
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Member 3: S. Kalyani -->
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 h-100 bg-light border border-2 shadow-sm" style="border-color: #a3d4a6 !important;">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 48px; height: 48px; background: #2e7d32; font-size: 1.05rem;">
+                                    SK
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-0 fs-6">S. KALYANI</h6>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.75rem;">Team Member</span>
+                                </div>
+                            </div>
+                            <div class="small text-secondary fw-semibold mt-2">
+                                <i class="fas fa-graduation-cap text-success me-1"></i> Dept. of CSE (AI &amp; ML)
+                            </div>
+                            <div class="small text-muted" style="font-size: 0.8rem;">
+                                SVCET (Autonomous), Chittoor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             4. SECTION: ARCHITECTURE & TECH STACK (4 Grid Columns)
+             ========================================== -->
+        <div class="mb-5">
+            <div class="text-center mb-4">
+                <span class="badge badge-technique mb-2 fs-6 px-3 py-1">
+                    <i class="fas fa-layer-group me-1"></i> System Architecture
+                </span>
+                <h2 class="section-title text-dark fs-2 mb-1">Technology Stack &amp; Infrastructure</h2>
+                <p class="text-muted small">Modern, responsive, and asynchronous NLP engine stack</p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 text-center shadow-sm">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 56px; height: 56px; background: #e8f5e9; color: #2e7d32; font-size: 1.6rem;">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">Backend Engine</h5>
+                        <p class="small text-secondary mb-0">
+                            Python 3.10+ microservice framework with Flask routing, session management, and JSON serialization.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 text-center shadow-sm">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 56px; height: 56px; background: #e8f5e9; color: #2e7d32; font-size: 1.6rem;">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">NLP Frameworks</h5>
+                        <p class="small text-secondary mb-0">
+                            Natural Language Toolkit (NLTK), WordNet lexical database, Regex morphological engines, and Word2Vec algorithms.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 text-center shadow-sm">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 56px; height: 56px; background: #e8f5e9; color: #2e7d32; font-size: 1.6rem;">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">Frontend UI</h5>
+                        <p class="small text-secondary mb-0">
+                            HTML5 semantic markup, Bootstrap 5 responsive grid, and custom SVCET Emerald Mint CSS design system.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 text-center shadow-sm">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 56px; height: 56px; background: #e8f5e9; color: #2e7d32; font-size: 1.6rem;">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">REST API</h5>
+                        <p class="small text-secondary mb-0">
+                            Asynchronous AJAX endpoints (`/api/process`, `/api/clean`, `/api/tokenize`) with sub-millisecond execution metrics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             5. SECTION: CALL TO ACTION
+             ========================================== -->
+        <div class="glass-card p-5 text-center bg-white border border-2 border-success rounded-4 shadow-sm">
+            <h2 class="fw-bold text-dark mb-2">Ready to Start Experimenting?</h2>
+            <p class="text-secondary mb-4 max-width-600 mx-auto fs-5">
+                Explore the live NLP workbench, experiment with word vector embeddings, or test individual preprocessing techniques.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{{ url_for('pipeline') }}" class="btn btn-primary-gradient py-3 px-4 fs-5">
+                    <i class="fas fa-project-diagram me-2"></i> Launch CBOW Pipeline
+                </a>
+                <a href="{{ url_for('explore') }}" class="btn btn-outline-custom py-3 px-4 fs-5">
+                    <i class="fas fa-compass me-2"></i> Start Exploring
+                </a>
+                <a href="{{ url_for('workbench') }}" class="btn btn-outline-custom py-3 px-4 fs-5">
+                    <i class="fas fa-flask me-2"></i> Open NLP Workbench
+                </a>
+            </div>
+        </div>
+
     </div>
 </section>
 {% endblock %}

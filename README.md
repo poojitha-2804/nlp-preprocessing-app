@@ -142,7 +142,9 @@ nlp-preprocessing-app/
 │   ├── lemmatization.html      # Lemmatization detailed page & demo
 │   ├── stopwords.html          # Stopwords detailed page & demo
 │   ├── cleaning.html           # Text cleaning detailed page & demo
-│   ├── playground.html         # Interactive NLP playground
+│   ├── playground.html         # Interactive NLP workbench & laboratory
+│   ├── pipeline.html           # Dedicated CBOW & Word Vector Pipeline Stepper
+│   ├── explore.html            # Guided Exploration Hub, Battle Arena & Quiz
 │   └── about.html              # Educational & technical background
 └── static/
     ├── css/
@@ -151,3 +153,16 @@ nlp-preprocessing-app/
         ├── main.js             # General interactive script & presets
         └── playground.js       # Dynamic playground UI logic & API handling
 ```
+
+---
+
+## Project Development Team
+
+- **Faculty Mentor & Guide**: **K. Anjaneyulu**, M.Tech (CSE), MBA (Finance) — Assistant Professor, Dept. of CSM / CSE (AI & ML)
+- **Project Lead**: **V. Poojitha** — Dept. of Computer Science & Engineering (AI & ML)
+- **Core Team Members**:
+  - **R. Jai Sree Ram** — Dept. of Computer Science & Engineering (AI & ML)
+  - **T. Sujatha** — Dept. of Computer Science & Engineering (AI & ML)
+  - **S. Kalyani** — Dept. of Computer Science & Engineering (AI & ML)
+- **Institution**: Sri Venkateswara College of Engineering & Technology (Autonomous), Chittoor
+

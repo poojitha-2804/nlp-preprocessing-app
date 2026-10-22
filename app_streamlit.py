@@ -1,6 +1,6 @@
 """
 SVCET Chittoor - NLP Preprocessing Streamlit Application
-Developed by V. Poojitha & R. Jai Sree Ram, CSE (AI & ML)
+Department of Computer Science & Engineering (AI & ML)
 """
 
 import streamlit as st
@@ -46,7 +46,7 @@ st.markdown("""
 <div class="header-card">
     <h1 style="color: #0D3B11; margin-bottom: 5px;">🌿 SVCET CHITTOOR</h1>
     <h3 style="color: #10B981; margin-top: 0;">NLP DATA PREPROCESSING TECHNIQUES</h3>
-    <p style="color: #4B5563;">Sri Venkateswara College of Engineering & Technology (Autonomous) | Developed by V. Poojitha & R. Jai Sree Ram, CSE (AI & ML)</p>
+    <p style="color: #4B5563;">Sri Venkateswara College of Engineering &amp; Technology (Autonomous) | Lead: V. Poojitha | Members: R. Jai Sree Ram, T. Sujatha, S. Kalyani &bull; Dept. of CSE (AI &amp; ML)</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -177,4 +177,4 @@ elif nav_choice == "📚 Technique Reference":
 
 # Footer
 st.markdown("---")
-st.caption("© 2026 SVCET NLP Preprocessing Platform . Developed by V. Poojitha & R. Jai Sree Ram, CSE (AI & ML)")
+st.caption("© 2026 SVCET NLP Preprocessing Platform . Lead: V. Poojitha | Members: R. Jai Sree Ram, T. Sujatha, S. Kalyani | Mentor: K. Anjaneyulu &bull; CSE (AI & ML)")
